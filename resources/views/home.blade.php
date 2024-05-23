@@ -1,22 +1,18 @@
-@extends('layouts.app')
+@extends('adminlte::page')
 
 @section('title')
     Laravel 11
 @endsection
 
-@push('css')
-    <style>
-        body {
-            background-color: #f8fafc;
-        }
-    </style>
-@endpush
+@section('content_header')
+    <h1>Home</h1>
+@endsection
 
 @section('content')
         <h1>Welcome to my blog</h1>
-        <x-alert2 type="warning" class="mb-4">
+        <x-alert type="success" class="mb-4">
             <x-slot name="title"> Alerta!</x-slot>
             Esto es una alerta
-        </x-alert2>
-        <p>Hola Mundo</p>
+        </x-alert>
+        <p>Hola Mundi</p>
 @endsection

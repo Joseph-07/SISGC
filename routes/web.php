@@ -9,8 +9,17 @@ Route::get('/', HomeController::class);
 
 // Rutas de los posts
 Route::get('/posts', [PostController::class, 'index']);
+
 Route::get('/posts/create', [PostController::class, 'create']);
+Route::post('/posts', [PostController::class, 'store']);
+
+Route::get('/posts/{id}/edit', [PostController::class, 'edit']);
+Route::put('/posts/{id}', [PostController::class, 'update']);
+
+Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+
 Route::get('/posts/{id}', [PostController::class, 'show']);
+
 
 Route::get('prueba', function () {
     
@@ -20,12 +29,14 @@ Route::get('prueba', function () {
     // $post->title = 'Titulo de PruEbA 3';
     // $post->content = 'Contenido de prueba 3'; 
     // $post->category = 'Categoria de prueba 3';
+    // $post->is_active = true;
+    // $post->published_at = now();
     
     // $post->save();
 
     // Actualizar un post
     //Formas de obtener los registros el primero es para obtener por id, el segundo es por un where que indica el campo
-    $post = Post::find(1);
+    // $post = Post::find(1);
     // $post = Post::where('title', 'Titulo de prueba 1')->first();
 
     // $post->title = 'Titulo Actualizado';
@@ -41,8 +52,8 @@ Route::get('prueba', function () {
     // $post = Post::find(1);
     // $post->delete();
     // return "Eliminado";
-    dd($post->is_active);
-    // return $post->is_active;
+    // dd($post->is_active);
+    return $post->is_active;
 });
 
 // Route::get('/posts/{post}/{cate?}', function ($post,$cate = null) {
