@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('adminlte::page')
 
 @section('content')
     <h1 class="text-3xl mb-6">Update Post</h1>
-    <form action="/posts/{{ $post->id }}" method="post" class="mt-6 border border-gray-400 rounded-lg p-4">
+    <form action="{{ route('posts.update', $post->id)}}" method="post" class="mt-6 border border-gray-400 rounded-lg p-4">
         @csrf
         @method('PUT')
 

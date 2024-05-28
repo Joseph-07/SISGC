@@ -1,8 +1,10 @@
-@extends('layouts.app')
-
+@extends('adminlte::page')
+@section('classes_body')
+    
+@endsection
 @section('content')
     <h1 class="text-3xl mb-6">Create Post</h1>
-    <form action="/posts" method="post" class="mt-6 border border-gray-400 rounded-lg p-4">
+    <form action="{{ route('posts.store') }}" method="post" class="mt-6 border border-gray-400 rounded-lg p-4 bg-gray-200">
         @csrf
         <div class="grid grid-cols-3 gap-4">
             <div class="col-span-1 ...">

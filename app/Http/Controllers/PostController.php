@@ -9,9 +9,14 @@ class PostController extends Controller
 {
     public function index(){
         $posts = Post::orderBy('id','desc')->paginate(10);
-
         
         return view('posts.index', ['posts' => $posts]);
+    }
+
+    public function paginate($pagina=null){
+        $posts = Post::orderBy('id','desc')->paginate(10);
+        dd($pagina);
+        //return view('posts.index', ['posts' => $posts, 'pagina' => $pagina]);
     }
 
     public function show($id){

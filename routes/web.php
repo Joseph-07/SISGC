@@ -1,64 +1,53 @@
 <?php
 
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\PersonalController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SystController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PostController;
-use App\Models\Post;
 
-Route::get('/', HomeController::class);
+Route::get('/', function () {
+    return view('home');
+})->name('inicio');
 
-// Rutas de los posts
-Route::get('/posts', [PostController::class, 'index']);
+Route::get('/course', [CourseController::class, 'index'])->name('course.index');
 
-Route::get('/posts/create', [PostController::class, 'create']);
-Route::post('/posts', [PostController::class, 'store']);
+Route::get('/users', [PersonalController::class, 'index'])->name('personal.index');
 
-Route::get('/posts/{id}/edit', [PostController::class, 'edit']);
-Route::put('/posts/{id}', [PostController::class, 'update']);
-
-Route::delete('/posts/{id}', [PostController::class, 'destroy']);
-
-Route::get('/posts/{id}', [PostController::class, 'show']);
+Route::get('/systems', [SystController::class, 'index'])->name('sistemas.index');
+Route::get('/systems/{id}', [SystController::class, 'show'])->name('sistemas.show');
+Route::get('/systems/create', [SystController::class, 'create'])->name('sistemas.create');
+Route::post('/systems', [SystController::class, 'store'])->name('sistemas.store');
+Route::get('/systems/{id}/edit', [SystController::class, 'edit'])->name('sistemas.edit');
+Route::put('/systems/{id}', [SystController::class, 'update'])->name('sistemas.update');
+Route::delete('/systems/{id}', [SystController::class, 'destroy'])->name('sistemas.destroy');
 
 
-Route::get('prueba', function () {
+// Route::middleware('auth')->group(function () {
+//     // Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+
+//     // Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+//     // Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+
+//     // Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
+//     // Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
+
+//     // Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+
+//     // Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
+//     Route::resource('posts', PostController::class);
     
-    // Crear un nuevo registro de la tabla posts
-    $post = New Post;
+//     Route::get('/course', [CourseController::class, 'index'])->name('course.index');
+// });
 
-    // $post->title = 'Titulo de PruEbA 3';
-    // $post->content = 'Contenido de prueba 3'; 
-    // $post->category = 'Categoria de prueba 3';
-    // $post->is_active = true;
-    // $post->published_at = now();
-    
-    // $post->save();
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-    // Actualizar un post
-    //Formas de obtener los registros el primero es para obtener por id, el segundo es por un where que indica el campo
-    // $post = Post::find(1);
-    // $post = Post::where('title', 'Titulo de prueba 1')->first();
-
-    // $post->title = 'Titulo Actualizado';
-    // $post->content = 'Contenido Actualizado';
-    // $post->category = 'Categoria Actualizada';
-    // $post->save();  
-
-    // Obtener los registros de la tabla posts con la clausula where, seleccionado el id y el title
-    // Y ordenandolos de forma descendente
-    // $post = Post::where('id','>=','2')->select('id','title')->orderBy('id','desc')->get();
-
-    // Eliminar un registro
-    // $post = Post::find(1);
-    // $post->delete();
-    // return "Eliminado";
-    // dd($post->is_active);
-    return $post->is_active;
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route::get('/posts/{post}/{cate?}', function ($post,$cate = null) {
-//     if($cate){
-//         return "Aqui se mostrara el post $post de la categoria $cate";
-//     }
-//     return "$post";
-// });
+require __DIR__ . '/auth.php';
