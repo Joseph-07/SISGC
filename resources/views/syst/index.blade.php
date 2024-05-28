@@ -9,20 +9,52 @@
         </div>
         <h1 class="text-3xl mb-6 text-center font-bold mt-4">Administrar Sistemas</h1>
 
-        <div
-            class="max-w-xl mx-auto bg-blue-300 rounded-lg border border-blue-600 shadow-md text-white px-2 font-bold text-sm">
-            xs
-        </div>
-
-        <div class="container">
-            <button class="btn btn-primary" id="toggleSearch">Buscar</button>
-            <div class="search-form hidden" id="searchForm">
+        <div class="max-w-xl mx-auto ring-2 ring-slate-600 rounded-lg ring-rounded z-10 bg-blue-300 shadow-md">
+            <div class=" rounded-lg">
+                <button class= "rounded-lg  text-white px-2 font-bold text-sm w-full text-left shadow-sm"
+                    id="toggleSearch">Buscar</button>
+            </div>
+            <div class="ring-2 ring-slate-600 rounded-b-lg bg-white hidden p-3" id="searchForm">
                 <form class="flex flex-col">
-                    <label for="searchInput" class="mb-2">Buscar</label>
-                    <input type="text" id="searchInput" class="border border-gray-300 p-2 rounded">
-                    <button type="submit" class="btn btn-primary mt-2">Buscar</button>
+                    <div class="border border-gray-300 ">
+                        <span class="absolute ml-2 -translate-y-3 bg-white text-sm px-1">Filtro de búsqueda</span>
+                        <div class="p-3 ">
+                            <label for="searchInput" class="mb-2">Buscar</label>
+                            <input type="text" id="searchInput" class="border border-gray-300 p-2 rounded h-6 hover:border-blue-300">
+
+                        </div>
+
+                    </div>
+                    <button type="submit"
+                        class="mx-auto mt-2 bg-blue-300 hover:bg-blue-500 text-white text-xs font-bold px-2 rounded ring-2 ring-slate-600 shadow-sm z-10">Buscar</button>
                 </form>
             </div>
+        </div>
+        <div class="flex mt-2">
+            <button 
+                            class="ml-auto mr-1 flex mt-2 bg-blue-300 hover:bg-blue-500 text-white text-xs font-bold px-2 rounded ring-2 ring-slate-600 shadow-md z-10">Nuevo</button>
+            <button 
+                            class="mr-auto ml-1 flex mt-2 bg-blue-300 hover:bg-blue-500 text-white text-xs font-bold px-2 rounded ring-2 ring-slate-600 shadow-md z-10">Regresar</button>
+        </div>
+
+        <div class="container max-w-2xl mx-auto mt-6 bg-red-100">
+            xs
+            <div class="ring-2 ring-slate-600  bg-white">
+                <div class=" bg-yellow-200 w-full flex border-b-2 border-slate-600">
+                    <span class="mx-auto text-md font-semibold text-gray-900 py-1">Lista de sistemas</span>
+                </div>
+                <div class="bg-blue-200 border-b-2 border-slate-600 grid grid-cols-3">
+                    <span>1</span>
+                    <span>2</span>
+                    <span>3</span>
+                </div>
+                <div class="bg-white h-5">
+
+                </div>
+            </div>
+            
+            {{ $systs->links() }}
+
         </div>
 
 

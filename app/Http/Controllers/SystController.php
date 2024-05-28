@@ -9,7 +9,7 @@ class SystController extends Controller
 {
     public function index()
     {
-        $systs = Syst::all();
+        $systs = Syst::paginate(10);
         return view('syst.index', compact('systs'));
         
     }

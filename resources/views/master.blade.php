@@ -10,7 +10,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('scripts')
 
-    <title>Document</title>
+    <title>Proshecto</title>
 </head>
 
 <body class="h-screen flex flex-col">
