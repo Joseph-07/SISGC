@@ -40,17 +40,17 @@
 
         <div class="container max-w-2xl mx-auto mt-6 bg-red-100">
             xs
-            <div class="ring-2 ring-slate-600 rounded-md bg-white">
-                <div class=" bg-yellow-200 w-full flex border-b-2 border-slate-600 rounded-t-md">
+            <div class="ring-1 ring-slate-400 rounded-md bg-white">
+                <div class=" bg-yellow-200 w-full flex border-b-2 border-slate-400 rounded-t-md">
                     <span class="mx-auto text-md font-semibold text-gray-900 py-1">Lista de sistemas</span>
                 </div>
-                <div class="bg-blue-600 border-b-2 border-slate-600 grid grid-cols-3 text-white">
-                    <span class="text-center border-r-2 border-slate-600">Código</span>
-                    <span class="text-center border-r-2 border-slate-600">Descrición</span>
+                <div class="bg-blue-600 border-b-2 border-slate-400 grid grid-cols-3 text-white">
+                    <span class="text-center border-r-2 border-slate-400">Código</span>
+                    <span class="text-center border-r-2 border-slate-400">Descrición</span>
                     <span class="text-center">Acciones</span>
                 </div>
                 @foreach ($systs as $syst)
-                    <div class="bg-blue-300 border-b-2 border-slate-600 grid grid-cols-3 py-4">
+                    <div class="bg-blue-300 border-b-2 border-slate-400 grid grid-cols-3 py-4">
                         <div class="text-center">
                             <span>{{ $syst->code }}</span>
                         </div>
@@ -59,9 +59,9 @@
                         </div>
                         <div class="text-center">
                             <span><a href="{{ route('sistemas.edit', $syst) }}"
-                                    class="p-2 bg-white hover:bg-blue-100 text-blue-500 text-xs font-bold rounded-xl ring-2     ring-blue-500">Editar</a></span>
+                                    class="p-2 bg-white hover:bg-yellow-50 text-blue-500 text-xs font-bold rounded-xl ring-2     ring-blue-500">Editar</a></span>
                             <span><a href="{{ route('sistemas.destroy', $syst) }}"
-                                    class="p-2 bg-white hover:bg-blue-100 text-blue-500 text-xs font-bold rounded-xl ring-2     ring-blue-500">Eliminar</a></span>
+                                    class="p-2 bg-white hover:bg-red-100 text-blue-500 text-xs font-bold rounded-xl ring-2     ring-blue-500">Eliminar</a></span>
                         </div>
                     </div>
                 @endforeach
