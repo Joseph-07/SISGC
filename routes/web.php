@@ -15,8 +15,8 @@ Route::get('/course', [CourseController::class, 'index'])->name('course.index');
 Route::get('/users', [PersonalController::class, 'index'])->name('personal.index');
 
 Route::get('/systems', [SystController::class, 'index'])->name('sistemas.index');
-Route::get('/systems/{id}', [SystController::class, 'show'])->name('sistemas.show');
 Route::get('/systems/create', [SystController::class, 'create'])->name('sistemas.create');
+Route::get('/systems/{id}', [SystController::class, 'show'])->name('sistemas.show');
 Route::post('/systems', [SystController::class, 'store'])->name('sistemas.store');
 Route::get('/systems/{id}/edit', [SystController::class, 'edit'])->name('sistemas.edit');
 Route::put('/systems/{id}', [SystController::class, 'update'])->name('sistemas.update');

@@ -14,7 +14,7 @@
 </head>
 
 <body class="h-screen flex flex-col">
-    <div class="w-full text-gray-700 bg-gray-100 dark-mode:text-gray-200 dark-mode:bg-gray-800 h-20 shadow-md z-10">
+    <div class="w-full text-gray-700 bg-slate-200 dark-mode:text-gray-200 dark-mode:bg-gray-800 h-20 shadow-md z-10">
         <div x-data="{ open: false }"
             class="flex flex-col  px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
             <div class="p-4 flex flex-row items-center justify-between">
@@ -36,7 +36,7 @@
                 class="flex-col flex-grow pb-4 md:pb-10 hidden md:flex md:justify-end md:flex-row pt-5">
                 <div @click.away="open = false" class="relative" x-data="{ open: false }">
                     <button @click="open = !open"
-                        class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:w-auto md:inline md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                        class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:w-auto md:inline md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-emerald-700 hover:bg-opacity-30 focus:bg-emerald-700 focus:bg-opacity-30 focus:outline-none focus:shadow-outline">
                         <span>Configuración</span>
                         <svg fill="currentColor" viewBox="0 0 20 20" :class="{ 'rotate-180': open, 'rotate-0': !open }"
                             class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1">
@@ -228,7 +228,7 @@
         </div>
     </div>
     <div class="flex-1 ">
-        <div class="mx-auto max-w-7xl sm:px-6 py-6 bg-slate-100 h-full">
+        <div class="mx-auto max-w-7xl sm:px-6 py-6 bg-white h-full shadow-2xl">
 
             @yield('content')
         </div>

@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Syst;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Termwind\Components\Dd;
 
 class SystController extends Controller
 {
     public function index()
     {
-        $systs = Syst::paginate(10);
+        // ->on('id_system')->paginate(10)
+        $systs = Syst::with('courses')->paginate(10);
+        // dd($systs);
         return view('syst.index', compact('systs'));
         
     }
@@ -28,29 +33,50 @@ class SystController extends Controller
     public function store(Request $request)
     {
         $syst = new Syst();
-        $syst->name = $request->name;
+        $syst->code = $request->name;
+        $syst->description = $request->description;
+        // dd($request);
         $syst->save();
-        return redirect()->route('syst.index');
+        return redirect()->route('sistemas.index');
     }
 
     public function edit($id)
     {
-        $syst = Syst::find($id);
-        return view('syst.edit', compact('syst'));
+        $systs = Syst::paginate(10);
+        $systI = Syst::find($id);
+        // dd($syst);
+        return view('syst.index', compact('systI', 'systs'));
     }
     
     public function update(Request $request, $id)
     {
         $syst = Syst::find($id);
-        $syst->name = $request->name;
+        $syst->code = $request->name;
+        $syst->description = $request->description;
+
         $syst->save();
-        return redirect()->route('syst.index');
+        return redirect()->route('sistemas.index');
     }
 
     public function destroy($id)
     {
-        $syst = Syst::find($id);
-        $syst->delete();
-        return redirect()->route('syst.index');
+        // $syst = Syst::find($id);
+        // $syst->delete();
+        // return redirect()->route('sistemas.index');
+
+        try {
+            $syst = Syst::with('courses')->find($id);
+            foreach ($syst->courses as $course) {
+                $course->delete();
+            }
+            
+            $syst->delete();
+
+            return redirect()->route('sistemas.index');
+        } catch (ModelNotFoundException $e) {
+            return response()->json('El usuario con ID ' . $id . ' no se encontró', 404);
+        } catch (Exception $e) {
+            return response()->json('Error al eliminar el usuario: ' . $e->getMessage(), 500);
+        }
     }
 }

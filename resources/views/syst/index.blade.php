@@ -4,53 +4,55 @@
 @endpush
 @section('content')
     <div class="">
-        <div class="w-full bg-blue-400 rounded-lg border border-blue-600 shadow-md text-white px-2 font-bold text-sm">
-            SISGC » Cursos » Administrar Cursoss
+        <div class="w-full bg-emerald-700 rounded-lg shadow-md text-white px-2 font-semibold text-sm">
+            SISGC » Sistemas » Administrar Sistemas
         </div>
         <h1 class="text-3xl mb-6 text-center font-bold mt-4">Administrar Sistemas</h1>
 
-        <div class="max-w-xl mx-auto ring-2 ring-slate-600 rounded-lg ring-rounded z-10 bg-blue-300 shadow-md">
+        <div class="bg-slate-600  hover:bg-emerald-700 max-w-xl mx-auto shadow-md  rounded-lg ring-rounded z-10 "id="searchBar">
             <div class=" rounded-lg">
-                <button class= "rounded-lg  text-white px-2 font-bold text-sm w-full text-left shadow-sm"
+                <button class= "rounded-lg  text-white px-2 pb-1 font-semibold text-sm w-full text-left shadow-sm"
                     id="toggleSearch">Buscar</button>
             </div>
-            <div class="ring-2 ring-slate-600 rounded-b-lg bg-white hidden p-3" id="searchForm">
-                <form class="flex flex-col">
+            <div class=" rounded-b-lg bg-white hidden p-3" id="searchForm">
+                <form class="flex flex-col mt-1">
                     <div class="border border-gray-300 ">
                         <span class="absolute ml-2 -translate-y-3 bg-white text-sm px-1">Filtro de búsqueda</span>
                         <div class="p-3 ">
                             <label for="searchInput" class="mb-2">Buscar</label>
                             <input type="text" id="searchInput"
-                                class="border border-gray-300 p-2 rounded h-6 hover:border-blue-300">
+                                class="border border-slate-300 p-2 rounded h-6 hover:border-blue-300">
 
                         </div>
 
                     </div>
                     <button type="submit"
-                        class="mx-auto mt-2 bg-blue-300 hover:bg-blue-500 text-white text-xs font-bold px-2 rounded ring-2 ring-slate-600 shadow-sm z-10">Buscar</button>
+                        class="mx-auto mt-2  bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold p-2 rounded shadow-sm z-10">Buscar</button>
                 </form>
             </div>
         </div>
+
         <div class="flex mt-2">
-            <button
-                class="ml-auto mr-1 flex mt-2 bg-blue-300 hover:bg-blue-500 text-white text-xs font-bold px-2 rounded ring-2 ring-slate-600 shadow-md z-10">Nuevo</button>
-            <button
-                class="mr-auto ml-1 flex mt-2 bg-blue-300 hover:bg-blue-500 text-white text-xs font-bold px-2 rounded ring-2 ring-slate-600 shadow-md z-10">Regresar</button>
+            <button id="btn-modal"
+                class="ml-auto mr-1 flex mt-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold p-2 rounded shadow-md z-10">Nuevo</button>
+            <a
+               href="{{ route('sistemas.create') }}" class="mr-auto ml-1 flex mt-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold p-2 rounded shadow-md z-10">Regresar</a>
         </div>
 
-        <div class="container max-w-2xl mx-auto mt-6 bg-red-100">
-            xs
-            <div class="ring-1 ring-slate-400 rounded-md bg-white">
-                <div class=" bg-yellow-200 w-full flex border-b-2 border-slate-400 rounded-t-md">
+        <div class="container max-w-2xl mx-auto mt-6 ">
+            {{ $systs->links() }}
+            
+            <div class=" rounded-md bg-white shadow-xl">
+                <div class=" bg-slate-200 w-full flex border-b-2 border-emerald-800 rounded-t-md shadow-3xl">
                     <span class="mx-auto text-md font-semibold text-gray-900 py-1">Lista de sistemas</span>
                 </div>
-                <div class="bg-blue-600 border-b-2 border-slate-400 grid grid-cols-3 text-white">
-                    <span class="text-center border-r-2 border-slate-400">Código</span>
-                    <span class="text-center border-r-2 border-slate-400">Descrición</span>
+                <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-3 text-white   ">
+                    <span class="text-center ">Código</span>
+                    <span class="text-center ">Descrición</span>
                     <span class="text-center">Acciones</span>
                 </div>
                 @foreach ($systs as $syst)
-                    <div class="bg-blue-300 border-b-2 border-slate-400 grid grid-cols-3 py-4">
+                    <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-3 py-4">
                         <div class="text-center">
                             <span>{{ $syst->code }}</span>
                         </div>
@@ -58,10 +60,12 @@
                             <span>{{ $syst->description }}</span>
                         </div>
                         <div class="text-center">
-                            <span><a href="{{ route('sistemas.edit', $syst) }}"
-                                    class="p-2 bg-white hover:bg-yellow-50 text-blue-500 text-xs font-bold rounded-xl ring-2     ring-blue-500">Editar</a></span>
-                            <span><a href="{{ route('sistemas.destroy', $syst) }}"
-                                    class="p-2 bg-white hover:bg-red-100 text-blue-500 text-xs font-bold rounded-xl ring-2     ring-blue-500">Eliminar</a></span>
+                            <span class="mr-1"><x-button href="{{ route('sistemas.edit', $syst) }}">Editar</x-button></span>
+                            <form action="{{ route('sistemas.destroy', $syst)}}" method="post" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"><a class="p-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl">Eliminar</a></button>
+                            </form>
                         </div>
                     </div>
                 @endforeach
@@ -73,14 +77,11 @@
             {{ $systs->links() }}
 
         </div>
+        @include('syst.create-modal')
 
+        @isset($systI)
+            @include('syst.edit-modal')
+        @endisset
 
-        <ul class="mt-6 list-disc ml-4">
-            @foreach ($systs as $syst)
-                <li class="text-1xl mb-4">
-                    <a href="{{ route('sistemas.show', $syst) }}">{{ $syst->code }}</a>
-                </li>
-            @endforeach
-        </ul>
     </div>
 @endsection
