@@ -12,6 +12,10 @@ class SystController extends Controller
 {
     public function index()
     {
+        if(isset($_SESSION['route-act'])) {
+            dd($_SESSION['route-act']);
+        }
+        $_SESSION['route-act'] = "sistemas.index";
         // ->on('id_system')->paginate(10)
         $systs = Syst::with('courses')->paginate(10);
         // dd($systs);
@@ -66,17 +70,22 @@ class SystController extends Controller
 
         try {
             $syst = Syst::with('courses')->find($id);
+            
             foreach ($syst->courses as $course) {
                 $course->delete();
             }
+            $syst = Syst::with('procs')->find($id);
             
+            foreach ($syst->procs as $proc) {
+                $proc->delete();
+            }
             $syst->delete();
 
             return redirect()->route('sistemas.index');
         } catch (ModelNotFoundException $e) {
             return response()->json('El usuario con ID ' . $id . ' no se encontró', 404);
         } catch (Exception $e) {
-            return response()->json('Error al eliminar el usuario: ' . $e->getMessage(), 500);
+            return response()->json('Error al eliminar : ' . $e->getMessage(), 500);
         }
     }
 }

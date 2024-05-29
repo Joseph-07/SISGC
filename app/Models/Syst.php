@@ -13,4 +13,8 @@ class Syst extends Model
     {
         return $this->hasMany(Course::class, 'id_system' ,'id');
     }
+
+    public function procs(){
+        return $this->hasMany(Proc::class, 'id_system' ,'id');
+    }
 }

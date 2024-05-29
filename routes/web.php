@@ -13,6 +13,13 @@ Route::get('/', function () {
 Route::get('/course', [CourseController::class, 'index'])->name('course.index');
 
 Route::get('/users', [PersonalController::class, 'index'])->name('personal.index');
+Route::get('/users/create', [PersonalController::class, 'create'])->name('personal.create');
+Route::get('users/{id}', [PersonalController::class, 'show'])->name('personal.show');
+Route::post('/users', [PersonalController::class, 'store'])->name('personal.store');
+Route::get('/users/{id}/edit', [PersonalController::class, 'edit'])->name('personal.edit');
+Route::put('/users/{id}', [PersonalController::class, 'update'])->name('personal.update');
+Route::delete('/users/{id}', [PersonalController::class, 'destroy'])->name('personal.destroy');
+
 
 Route::get('/systems', [SystController::class, 'index'])->name('sistemas.index');
 Route::get('/systems/create', [SystController::class, 'create'])->name('sistemas.create');
