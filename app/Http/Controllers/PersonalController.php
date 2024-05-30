@@ -29,11 +29,17 @@ class PersonalController extends Controller
     public function store(Request $request)
     {
         $personal = new Personal();
-        $personal->code = $request->name;
-        $personal->description = $request->description;
+        $personal->name = $request->name;
+        $personal->last_name = $request->last_name;
+        $personal->code = $request->code;
+        $personal->email = $request->email;
+        $personal->phone = $request->phone;
+        $personal->address = $request->address;
+        $personal->role = $request->role;
+        $personal->password = bcrypt($request->password);
         // dd($request);
         $personal->save();
-        return redirect()->route('sistemas.index');
+        return redirect()->route('personal.index');
     }
 
     public function edit($id)
@@ -47,8 +53,14 @@ class PersonalController extends Controller
     public function update(Request $request, $id)
     {
         $personal = Personal::find($id);
-        $personal->code = $request->name;
-        $personal->description = $request->description;
+        $personal->name = $request->name;
+        $personal->last_name = $request->last_name;
+        $personal->code = $request->code;
+        $personal->email = $request->email;
+        $personal->phone = $request->phone;
+        $personal->address = $request->address;
+        $personal->role = $request->role;
+        $personal->password = bcrypt($request->password);
 
         $personal->save();
         return redirect()->route('personal.index');
@@ -61,19 +73,11 @@ class PersonalController extends Controller
         // return redirect()->route('sistemas.index');
 
         try {
-            $personal = Personal::with('courses')->find($id);
-            
-            foreach ($personal->courses as $course) {
-                $course->delete();
-            }
-            $personal = Personal::with('procs')->find($id);
-            
-            foreach ($personal->procs as $proc) {
-                $proc->delete();
-            }
+            $personal = Personal::find($id);
+        
             $personal->delete();
 
-            return redirect()->route('sistemas.index');
+            return redirect()->route('personal.index');
         } catch (ModelNotFoundException $e) {
             return response()->json('El usuario con ID ' . $id . ' no se encontró', 404);
         } catch (Exception $e) {

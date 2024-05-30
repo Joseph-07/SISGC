@@ -15,10 +15,11 @@ class SystController extends Controller
         if(isset($_SESSION['route-act'])) {
             dd($_SESSION['route-act']);
         }
-        $_SESSION['route-act'] = "sistemas.index";
+        $_SESSION['route-act'] = "inicio";
         // ->on('id_system')->paginate(10)
         $systs = Syst::with('courses')->paginate(10);
         // dd($systs);
+        // dd($_SESSION['route-act']);
         return view('syst.index', compact('systs'));
         
     }
@@ -54,6 +55,8 @@ class SystController extends Controller
     
     public function update(Request $request, $id)
     {
+        $_SESSION['route-act'] = "inicio";
+
         $syst = Syst::find($id);
         $syst->code = $request->name;
         $syst->description = $request->description;

@@ -2,15 +2,16 @@
 
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PersonalController;
+use App\Http\Controllers\ProcController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SystController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    // dd($_SESSION['route-act']);
     return view('home');
 })->name('inicio');
 
-Route::get('/course', [CourseController::class, 'index'])->name('course.index');
 
 Route::get('/users', [PersonalController::class, 'index'])->name('personal.index');
 Route::get('/users/create', [PersonalController::class, 'create'])->name('personal.create');
@@ -28,6 +29,9 @@ Route::post('/systems', [SystController::class, 'store'])->name('sistemas.store'
 Route::get('/systems/{id}/edit', [SystController::class, 'edit'])->name('sistemas.edit');
 Route::put('/systems/{id}', [SystController::class, 'update'])->name('sistemas.update');
 Route::delete('/systems/{id}', [SystController::class, 'destroy'])->name('sistemas.destroy');
+
+Route::resource('procs', ProcController::class)->names('procesos')->parameters(['procs' => 'id']);
+Route::resource('courses', CourseController::class)->names('cursos')->parameters(['courses' => 'id']);
 
 
 // Route::middleware('auth')->group(function () {
