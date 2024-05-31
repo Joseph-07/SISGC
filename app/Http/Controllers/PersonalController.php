@@ -12,6 +12,7 @@ class PersonalController extends Controller
     public function index()
     {
         $personals = Personal::paginate(10);
+        // dd($personals);
         return view('personal.index', compact('personals'));
     }
 
@@ -44,10 +45,9 @@ class PersonalController extends Controller
 
     public function edit($id)
     {
-        $personals = Personal::paginate(10);
-        $personalI = Personal::find($id);
+        $personal = Personal::find($id);
         // dd($personal);
-        return view('personal.index', compact('personalI', 'personals'));
+        return view('personal.edit', compact('personal'));
     }
     
     public function update(Request $request, $id)

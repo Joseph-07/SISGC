@@ -7,7 +7,7 @@
     // $xs = $_SESSION['route-act'];
 @endphp
 @section('content')
-    <div class="">
+    <div class="zoom" id="container">
         <div class="w-full bg-emerald-700 rounded-lg shadow-md text-white px-2 font-semibold text-sm">
             SISGC » Procesos » Administrar Procesos
         </div>
@@ -37,8 +37,7 @@
         </div>
 
         <div class="flex mt-2">
-            <button id="btn-modal"
-                class="ml-auto mr-1 flex mt-2 bg-slate-600 hover:bg-emerald-700 zoomh text-white text-xs font-semibold p-2 rounded shadow-md ">Nuevo</button>
+            <a href="{{ route('procesos.create') }}" class="ml-auto mr-1 flex mt-2 zoomh bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold p-2 rounded shadow-md ">Nuevo</a>
             <a href="{{ route('inicio') }}"
                 class="mr-auto ml-1 flex mt-2 bg-slate-600 hover:bg-emerald-700 zoomh text-white text-xs font-semibold p-2 rounded shadow-md ">Regresar</a>
         </div>
@@ -48,13 +47,13 @@
 
             <div class=" rounded-md bg-white shadow-xl">
                 <div class=" bg-slate-200 w-full flex border-b-2 border-emerald-800 rounded-t-md shadow-3xl">
-                    <span class="mx-auto text-md font-semibold text-gray-900 py-1">Lista de usuarios</span>
+                    <span class="mx-auto text-md font-semibold text-gray-900 py-1">Lista de procesos</span>
                 </div>
                 @isset($procs)
                     <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-4 text-white   ">
                         <span class="text-center ">Nombre</span>
-                        <span class="text-center ">Apellido</span>
-                        <span class="text-center ">Ficha</span>
+                        <span class="text-center ">Descripción</span>
+                        <span class="text-center ">Sistema</span>
                         <span class="text-center">Acciones</span>
                     </div>
                     @foreach ($procs as $proc)
@@ -63,10 +62,10 @@
                                 <span>{{ $proc->id }}</span>
                             </div>
                             <div class="text-center">
-                                <span>{{ $proc->name }}</span>
+                                <span>{{ $proc->code }}</span>
                             </div>
                             <div class="text-center">
-                                <span>{{ $proc->last_name }}</span>
+                                <span>{{ $proc->description }}</span>
                             </div>
                             <div class="text-center">
                                 <span>{{ $proc->code }}</span>
@@ -77,7 +76,7 @@
                                         <button
                                             class="p-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
 
-                                            <a href="{{ route('proc.edit', $proc) }}" class="p-2 px-0">
+                                            <a href="{{ route('procesos.edit', $proc) }}" class="p-2 px-0">
                                                 Editar
                                             </a>
                                         </button>
@@ -93,7 +92,7 @@
                                 </div>
 
                                 <x-confirm id="crud-modal-{{ $proc->id }}" idb="close-modal-{{ $proc->id }}"
-                                    direccion="{{ route('proc.destroy', $proc) }}" />
+                                    direccion="{{ route('procesos.destroy', $proc) }}" />
                             </div>
                         </div>
                     @endforeach
@@ -101,7 +100,7 @@
                 @if (count($procs) == 0)
                     <div class="bg-slate-100 border-b-2 border-emerald-700  py-4">
                         <div class="text-center">
-                            <span>No hay sistemas</span>
+                            <span>No hay procesos</span>
                         </div>
                     </div>
                 @endif
@@ -138,57 +137,7 @@
             </div>
         </x-modal.modal>
 
-        @isset($procI)
-            <x-modal.modal titulo="Editar usuario" direccion="{{ route('procesos.update', $procI) }}" id="crud-modal-e"
-                idb="close-modal-e">
-                @method('PUT')
-                <div class="col-span-1">
-                    <x-modal.input nombre="name" titulo="Nombre" placeholder="Escriba el nombre" tipo="text"
-                        valor="{{ $procI->name }}" />
-                </div>
-                <div class="col-span-1">
-                    <x-modal.input nombre="last_name" titulo="Apellido" placeholder="Escriba el apellido" tipo="text"
-                        valor="{{ $procI->last_name }}" />
-                </div>
-                <div class="col-span-2">
-                    <x-modal.input nombre="email" titulo="Correo" placeholder="Escriba el correo" tipo="email"
-                        valor="{{ $procI->email }}" />
-                </div>
-                <div class="col-span-1">
-                    <x-modal.input nombre="code" titulo="Ficha" placeholder="Escriba la ficha" tipo="number"
-                        valor="{{ $procI->code }}" />
-                </div>
-                <div class="col-span-1">
-                    <x-modal.input nombre="phone" titulo="Teléfono" placeholder="Escriba el teléfono" tipo="tlf"
-                        valor="{{ $procI->phone }}" />
-                </div>
-                <div class="col-span-1">
-                    <x-modal.select nombre="role" titulo="Rol">
-                        @if ($procI->role == 'admin')
-                            <option value="admin" selected>Administrador</option>
-                            <option value="fac">Facilitador</option>
-                            <option value="par">Participante</option>
-                        @elseif ($procI->role == 'fac')
-                            <option value="admin">Administrador</option>
-                            <option value="fac" selected>Facilitador</option>
-                            <option value="par">Participante</option>
-                        @else
-                            <option value="admin">Administrador</option>
-                            <option value="fac">Facilitador</option>
-                            <option value="par" selected>Participante</option>
-                        @endif
-                    </x-modal.select>
-                </div>
-                <div class="col-span-1">
-                    <x-modal.input nombre="password" titulo="Contraseña" placeholder="Escriba la contraseña"
-                        tipo="password" />
-                </div>
-                <div class="col-span-2">
-                    <x-modal.input nombre="address" titulo="Dirección" placeholder="Escriba la dirección" tipo="text"
-                        valor="{{ $procI->address }}" />
-                </div>
-            </x-modal.modal>
-        @endisset
+        
 
     </div>
 @endsection

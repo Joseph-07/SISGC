@@ -11,6 +11,6 @@ class Proc extends Model
 
     public function syst()
     {
-        return $this->belongsTo(Syst::class, 'id', 'id_system');
+        return $this->belongsTo(Syst::class, 'id_system', 'id');
     }
 }

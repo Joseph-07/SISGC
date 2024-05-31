@@ -3,25 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\Proc;
+use App\Models\Syst;
 use Illuminate\Http\Request;
 
 class ProcController extends Controller
 {
     public function index()
     {
-        $procs = Proc::paginate(10);
-
+        $procs = Proc::with('syst')->paginate(10);
+        // dd($procs);
         return view('proc.index', compact('procs'));
     }
 
     public function create()
     {
-        return view('proc.create');
+        $systs = Syst::all('id', 'code');
+        return view('proc.create', compact('systs'));
     }
 
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
+        $proc = new Proc();
+        $proc->code = $request->name;
+        $proc->description = $request->description;
+        $proc->id_system = $request->id_syst;
+        $proc->save();
+        return redirect()->route('procesos.index');
     }
 
     public function edit($id)

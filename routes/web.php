@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     // dd($_SESSION['route-act']);
-    return view('home');
+    return view('syst.create');
 })->name('inicio');
 
 

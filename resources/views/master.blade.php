@@ -226,10 +226,11 @@
         </div>
     </div>
     <div class="flex-1 ">
-        <div class="mx-auto max-w-7xl sm:px-6 py-6 bg-white h-full shadow-2xl">
+        <div class="mx-auto max-w-7xl sm:px-6 py-6 bg-white h-full shadow-2xl @yield('hidden')">
 
             @yield('content')
         </div>
+        @yield('modal')
 
     </div>
 </body>

@@ -47,10 +47,9 @@ class SystController extends Controller
 
     public function edit($id)
     {
-        $systs = Syst::paginate(10);
-        $systI = Syst::find($id);
+        $syst = Syst::find($id);
         // dd($syst);
-        return view('syst.index', compact('systI', 'systs'));
+        return view('syst.edit', compact('syst'));
     }
     
     public function update(Request $request, $id)

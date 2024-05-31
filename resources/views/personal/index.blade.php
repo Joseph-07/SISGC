@@ -7,7 +7,7 @@
     // $xs = $_SESSION['route-act'];
 @endphp
 @section('content')
-    <div class="">
+    <div class="zoom" id="container">
         <div class="w-full bg-emerald-700 rounded-lg shadow-md text-white px-2 font-semibold text-sm">
             SISGC » Usuarios » Administrar Usuarios
         </div>
@@ -37,8 +37,7 @@
         </div>
 
         <div class="flex mt-2">
-            <button id="btn-modal"
-                class="ml-auto mr-1 flex mt-2 bg-slate-600 hover:bg-emerald-700 zoomh text-white text-xs font-semibold p-2 rounded shadow-md ">Nuevo</button>
+            <a href="{{ route('personal.create') }}" class="ml-auto mr-1 flex mt-2 zoomh bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold p-2 rounded shadow-md ">Nuevo</a>
             <a href="{{ route('inicio') }}"
                 class="mr-auto ml-1 flex mt-2 bg-slate-600 hover:bg-emerald-700 zoomh text-white text-xs font-semibold p-2 rounded shadow-md ">Regresar</a>
         </div>
@@ -103,7 +102,7 @@
                 @if (count($personals) == 0)
                     <div class="bg-slate-100 border-b-2 border-emerald-700  py-4">
                         <div class="text-center">
-                            <span>No hay sistemas</span>
+                            <span>No hay usuarios</span>
                         </div>
                     </div>
                 @endif
@@ -118,91 +117,6 @@
 
 
         </div>
-
-
-        <x-modal.modal titulo="Registrar usuario" direccion="{{ route('personal.store') }}" class="hidden"
-            id="crud-modal-s" idb="close-modal-s">
-            <div class="col-span-1">
-                <x-modal.input nombre="name" titulo="Nombre" placeholder="Escriba el nombre" tipo="text" />
-            </div>
-            <div class="col-span-1">
-                <x-modal.input nombre="last_name" titulo="Apellido" placeholder="Escriba el apellido" tipo="text" />
-            </div>
-            <div class="col-span-2">
-                <x-modal.input nombre="email" titulo="Correo" placeholder="Escriba el correo" tipo="email" />
-            </div>
-            <div class="col-span-1">
-                <x-modal.input nombre="code" titulo="Ficha" placeholder="Escriba la ficha" tipo="number" />
-            </div>
-            <div class="col-span-1">
-                <x-modal.input nombre="phone" titulo="Teléfono" placeholder="Escriba el teléfono" tipo="tlf" />
-            </div>
-            <div class="col-span-1">
-                <x-modal.select nombre="role" titulo="Rol">
-                    <option value="admin">Administrador</option>
-                    <option value="fac">Facilitador</option>
-                    <option value="par" selected>Participante</option>
-                </x-modal.select>
-            </div>
-            <div class="col-span-1">
-                <x-modal.input nombre="password" titulo="Contraseña" placeholder="Escriba la contraseña" tipo="password" />
-            </div>
-            <div class="col-span-2">
-                <x-modal.input nombre="address" titulo="Dirección" placeholder="Escriba la dirección" tipo="text" />
-            </div>
-        </x-modal.modal>
-
-        @isset($personalI)
-            <x-modal.modal titulo="Editar usuario" direccion="{{ route('personal.update', $personalI) }}" id="crud-modal-e"
-                idb="close-modal-e">
-                @method('PUT')
-                <div class="col-span-1">
-                    <x-modal.input nombre="name" titulo="Nombre" placeholder="Escriba el nombre" tipo="text"
-                        valor="{{ $personalI->name }}" />
-                </div>
-                <div class="col-span-1">
-                    <x-modal.input nombre="last_name" titulo="Apellido" placeholder="Escriba el apellido" tipo="text"
-                        valor="{{ $personalI->last_name }}" />
-                </div>
-                <div class="col-span-2">
-                    <x-modal.input nombre="email" titulo="Correo" placeholder="Escriba el correo" tipo="email"
-                        valor="{{ $personalI->email }}" />
-                </div>
-                <div class="col-span-1">
-                    <x-modal.input nombre="code" titulo="Ficha" placeholder="Escriba la ficha" tipo="number"
-                        valor="{{ $personalI->code }}" />
-                </div>
-                <div class="col-span-1">
-                    <x-modal.input nombre="phone" titulo="Teléfono" placeholder="Escriba el teléfono" tipo="tlf"
-                        valor="{{ $personalI->phone }}" />
-                </div>
-                <div class="col-span-1">
-                    <x-modal.select nombre="role" titulo="Rol">
-                        @if ($personalI->role == 'admin')
-                            <option value="admin" selected>Administrador</option>
-                            <option value="fac">Facilitador</option>
-                            <option value="par">Participante</option>
-                        @elseif ($personalI->role == 'fac')
-                            <option value="admin">Administrador</option>
-                            <option value="fac" selected>Facilitador</option>
-                            <option value="par">Participante</option>
-                        @else
-                            <option value="admin">Administrador</option>
-                            <option value="fac">Facilitador</option>
-                            <option value="par" selected>Participante</option>
-                        @endif
-                    </x-modal.select>
-                </div>
-                <div class="col-span-1">
-                    <x-modal.input nombre="password" titulo="Contraseña" placeholder="Escriba la contraseña"
-                        tipo="password" />
-                </div>
-                <div class="col-span-2">
-                    <x-modal.input nombre="address" titulo="Dirección" placeholder="Escriba la dirección" tipo="text"
-                        valor="{{ $personalI->address }}" />
-                </div>
-            </x-modal.modal>
-        @endisset
 
     </div>
 @endsection

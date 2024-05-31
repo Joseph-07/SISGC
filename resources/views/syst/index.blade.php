@@ -7,14 +7,14 @@
     // $xs = $_SESSION['route-act'];
 @endphp
 @section('content')
-    <div class="">
+    <div class="zoom" id="container">
         <div class="w-full bg-emerald-700 rounded-lg shadow-md text-white px-2 font-semibold text-sm">
             SISGC » Sistemas » Administrar Sistemas
         </div>
         <h1 class="text-3xl mb-6 text-center font-bold mt-4">Administrar Sistemas</h1>
 
         <div class="  max-w-xl mx-auto shadow-2xl  rounded-lg ring-rounded z-10 " id="searchButton">
-            <div class=" bg-slate-600 rounded-lg hover:bg-emerald-700" id="searchBar">
+            <div class=" bg-slate-600 rounded-lg hover:bg-emerald-700 zoomh" id="searchBar">
                 <button class= "rounded-lg  text-white px-2 pb-1 font-semibold text-sm w-full text-left shadow-sm"
                     id="toggleSearch">Buscar</button>
             </div>
@@ -37,10 +37,10 @@
         </div>
 
         <div class="flex mt-2">
-            <button id="btn-modal"
-                class="ml-auto mr-1 flex mt-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold p-2 rounded shadow-md ">Nuevo</button>
+            
+            <a href="{{ route('sistemas.create') }}" class="ml-auto mr-1 flex mt-2 zoomh bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold p-2 rounded shadow-md ">Nuevo</a>
             <a href="{{ route('inicio') }}"
-                class="mr-auto ml-1 flex mt-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold p-2 rounded shadow-md ">Regresar</a>
+                class="mr-auto ml-1 flex mt-2 zoomh bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold p-2 rounded shadow-md ">Regresar</a>
         </div>
 
         <div class="container max-w-2xl mx-auto mt-6 ">
@@ -70,9 +70,9 @@
                             <div class=" mx-auto flex">
                                 <div class="zoomh">
                                     <span class="mr-1">
-                                        <button class="p-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
+                                        <button class="py-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
 
-                                            <a href="{{ route('sistemas.edit', $syst) }}" class="p-2 px-0">
+                                            <a href="{{ route('sistemas.edit', $syst) }}" class="p-2 px-2">
                                                 Editar
                                             </a>
                                         </button>
@@ -108,35 +108,6 @@
             {{ $systs->links() }}
 
         </div>
-        <x-modal.modal titulo="Registrar sistema" direccion="{{ route('sistemas.store') }}" class="hidden" id="crud-modal-s">
-            <div class="col-span-2">
-                <x-modal.input nombre="name" titulo="Nombre" placeholder="Escriba el nombre del sistema" tipo="text" />
-            </div>
-            <label for="description" class="block text-sm font-medium text-gray-900">Descripción</label>
-            <textarea placeholder="Escriba la descripción" name="description" id="description" cols="30" rows="10" class="resize-none p-2.5 col-span-2 bg-gray-50 border border-gray-300 text-gray-900 hover:border-emerald-900 focus:ring-emerald-900  focus:border-emerald-900 text-sm rounded-lg  block w-full"></textarea>
-            {{-- <div class="col-span-2">
-                <x-modal.input nombre="description" titulo="Descripción" placeholder="Escriba la descripción"
-                    tipo="text" />
-            </div> --}}
-        </x-modal.modal>
-
-        @isset($systI)
-            <x-modal.modal titulo="Editar sistema" direccion="{{ route('sistemas.update', $systI) }}" id="crud-modal-e"
-                idb="close-modal-e">
-                @method('PUT')
-                <div class="col-span-2">
-                    <x-modal.input nombre="name" titulo="Nombre" placeholder="Escriba el nombre del sistema" tipo="text"
-                        valor="{{ $systI->code }}" />
-                </div>
-                <textarea name="description" id="description" cols="30" rows="10">
-                    {{ $systI->description }}
-                </textarea>
-                {{-- <div class="col-span-2">
-                    <x-modal.input nombre="description" titulo="Descripción" placeholder="Escriba la descripción" tipo="text"
-                        valor="{{ $systI->description }}" />
-                </div> --}}
-            </x-modal.modal>
-        @endisset
-
+        
     </div>
 @endsection

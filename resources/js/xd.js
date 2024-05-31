@@ -53,6 +53,7 @@ window.onclick = function (event) {
         let id = event.target.id;
         id = id.replace("btn-delete-","");
         console.log(id);
+        document.getElementById("container").classList.remove("zoom");
         document.getElementById("crud-modal-"+id).classList.toggle("hidden");
     }
 
