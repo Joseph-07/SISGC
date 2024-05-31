@@ -9,9 +9,9 @@
 @section('content')
     <div class="">
         <div class="w-full bg-emerald-700 rounded-lg shadow-md text-white px-2 font-semibold text-sm">
-            SISGC » Usuarios » Administrar Usuarios
+            SISGC » Procesos » Administrar Procesos
         </div>
-        <h1 class="text-3xl mb-6 text-center font-bold mt-4">Administrar Usuarios</h1>
+        <h1 class="text-3xl mb-6 text-center font-bold mt-4">Administrar Procesos</h1>
 
         <div class="  max-w-xl mx-auto shadow-2xl  rounded-lg ring-rounded z-10 " id="searchButton">
             <div class=" bg-slate-600 rounded-lg hover:bg-emerald-700 zoomh" id="searchBar">
@@ -44,42 +44,40 @@
         </div>
 
         <div class="container max-w-2xl mx-auto mt-6 ">
-            {{ $personals->links() }}
+            {{ $procs->links() }}
 
             <div class=" rounded-md bg-white shadow-xl">
                 <div class=" bg-slate-200 w-full flex border-b-2 border-emerald-800 rounded-t-md shadow-3xl">
                     <span class="mx-auto text-md font-semibold text-gray-900 py-1">Lista de usuarios</span>
                 </div>
-                @isset($personals)
+                @isset($procs)
                     <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-4 text-white   ">
                         <span class="text-center ">Nombre</span>
                         <span class="text-center ">Apellido</span>
                         <span class="text-center ">Ficha</span>
                         <span class="text-center">Acciones</span>
                     </div>
-                    @foreach ($personals as $personal)
+                    @foreach ($procs as $proc)
                         <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-4 py-4">
-                            {{-- Campos --}}
                             <div class="hidden">
-                                <span>{{ $personal->id }}</span>
+                                <span>{{ $proc->id }}</span>
                             </div>
                             <div class="text-center">
-                                <span>{{ $personal->name }}</span>
+                                <span>{{ $proc->name }}</span>
                             </div>
                             <div class="text-center">
-                                <span>{{ $personal->last_name }}</span>
+                                <span>{{ $proc->last_name }}</span>
                             </div>
                             <div class="text-center">
-                                <span>{{ $personal->code }}</span>
+                                <span>{{ $proc->code }}</span>
                             </div>
-
-                            {{-- Acciones --}}
                             <div class=" mx-auto flex">
                                 <div class="zoomh">
                                     <span class="mr-1">
-                                        <button class="p-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
+                                        <button
+                                            class="p-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
 
-                                            <a href="{{ route('personal.edit', $personal) }}" class="p-2 px-0">
+                                            <a href="{{ route('proc.edit', $proc) }}" class="p-2 px-0">
                                                 Editar
                                             </a>
                                         </button>
@@ -87,20 +85,20 @@
                                 </div>
                                 <div class="zoomh">
                                     <span class="ml-1">
-                                        <button id="btn-delete-{{ $personal->id }}"
+                                        <button id="btn-delete-{{ $proc->id }}"
                                             class="p-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl">
                                             Eliminar
                                         </button>
                                     </span>
                                 </div>
 
-                                <x-confirm id="crud-modal-{{ $personal->id }}" idb="close-modal-{{ $personal->id }}" 
-                                    direccion="{{ route('personal.destroy', $personal) }}" />
+                                <x-confirm id="crud-modal-{{ $proc->id }}" idb="close-modal-{{ $proc->id }}"
+                                    direccion="{{ route('proc.destroy', $proc) }}" />
                             </div>
                         </div>
                     @endforeach
                 @endisset
-                @if (count($personals) == 0)
+                @if (count($procs) == 0)
                     <div class="bg-slate-100 border-b-2 border-emerald-700  py-4">
                         <div class="text-center">
                             <span>No hay sistemas</span>
@@ -114,28 +112,16 @@
             <div id="xs">
 
             </div>
-            {{ $personals->links() }}
+            {{ $procs->links() }}
 
 
         </div>
 
 
-        <x-modal.modal titulo="Registrar usuario" direccion="{{ route('personal.store') }}" class="hidden"
+        <x-modal.modal titulo="Registrar usuario" direccion="{{ route('procesos.store') }}" class="hidden"
             id="crud-modal-s" idb="close-modal-s">
             <div class="col-span-1">
                 <x-modal.input nombre="name" titulo="Nombre" placeholder="Escriba el nombre" tipo="text" />
-            </div>
-            <div class="col-span-1">
-                <x-modal.input nombre="last_name" titulo="Apellido" placeholder="Escriba el apellido" tipo="text" />
-            </div>
-            <div class="col-span-2">
-                <x-modal.input nombre="email" titulo="Correo" placeholder="Escriba el correo" tipo="email" />
-            </div>
-            <div class="col-span-1">
-                <x-modal.input nombre="code" titulo="Ficha" placeholder="Escriba la ficha" tipo="number" />
-            </div>
-            <div class="col-span-1">
-                <x-modal.input nombre="phone" titulo="Teléfono" placeholder="Escriba el teléfono" tipo="tlf" />
             </div>
             <div class="col-span-1">
                 <x-modal.select nombre="role" titulo="Rol">
@@ -144,45 +130,45 @@
                     <option value="par" selected>Participante</option>
                 </x-modal.select>
             </div>
-            <div class="col-span-1">
-                <x-modal.input nombre="password" titulo="Contraseña" placeholder="Escriba la contraseña" tipo="password" />
-            </div>
             <div class="col-span-2">
-                <x-modal.input nombre="address" titulo="Dirección" placeholder="Escriba la dirección" tipo="text" />
+                <label for="description" class="block text-sm font-medium text-gray-900">Descripción</label>
+                <textarea placeholder="Escriba la descripción" name="description" id="description" cols="30" rows="10"
+                    class="resize-none p-2.5  bg-gray-50 border border-gray-300 text-gray-900 hover:border-emerald-900 focus:ring-emerald-900  focus:border-emerald-900 text-sm rounded-lg  block w-full"></textarea>
+
             </div>
         </x-modal.modal>
 
-        @isset($personalI)
-            <x-modal.modal titulo="Editar usuario" direccion="{{ route('personal.update', $personalI) }}" id="crud-modal-e"
+        @isset($procI)
+            <x-modal.modal titulo="Editar usuario" direccion="{{ route('procesos.update', $procI) }}" id="crud-modal-e"
                 idb="close-modal-e">
                 @method('PUT')
                 <div class="col-span-1">
                     <x-modal.input nombre="name" titulo="Nombre" placeholder="Escriba el nombre" tipo="text"
-                        valor="{{ $personalI->name }}" />
+                        valor="{{ $procI->name }}" />
                 </div>
                 <div class="col-span-1">
                     <x-modal.input nombre="last_name" titulo="Apellido" placeholder="Escriba el apellido" tipo="text"
-                        valor="{{ $personalI->last_name }}" />
+                        valor="{{ $procI->last_name }}" />
                 </div>
                 <div class="col-span-2">
                     <x-modal.input nombre="email" titulo="Correo" placeholder="Escriba el correo" tipo="email"
-                        valor="{{ $personalI->email }}" />
+                        valor="{{ $procI->email }}" />
                 </div>
                 <div class="col-span-1">
                     <x-modal.input nombre="code" titulo="Ficha" placeholder="Escriba la ficha" tipo="number"
-                        valor="{{ $personalI->code }}" />
+                        valor="{{ $procI->code }}" />
                 </div>
                 <div class="col-span-1">
                     <x-modal.input nombre="phone" titulo="Teléfono" placeholder="Escriba el teléfono" tipo="tlf"
-                        valor="{{ $personalI->phone }}" />
+                        valor="{{ $procI->phone }}" />
                 </div>
                 <div class="col-span-1">
                     <x-modal.select nombre="role" titulo="Rol">
-                        @if ($personalI->role == 'admin')
+                        @if ($procI->role == 'admin')
                             <option value="admin" selected>Administrador</option>
                             <option value="fac">Facilitador</option>
                             <option value="par">Participante</option>
-                        @elseif ($personalI->role == 'fac')
+                        @elseif ($procI->role == 'fac')
                             <option value="admin">Administrador</option>
                             <option value="fac" selected>Facilitador</option>
                             <option value="par">Participante</option>
@@ -199,7 +185,7 @@
                 </div>
                 <div class="col-span-2">
                     <x-modal.input nombre="address" titulo="Dirección" placeholder="Escriba la dirección" tipo="text"
-                        valor="{{ $personalI->address }}" />
+                        valor="{{ $procI->address }}" />
                 </div>
             </x-modal.modal>
         @endisset

@@ -28,6 +28,7 @@ const createModal = document.getElementById("crud-modal-s");
 // const editModal = document.getElementById("crud-modal-e");
 const modal = document.querySelectorAll('[id^="crud-modal"]');
 const btnclose = document.querySelectorAll('[id^="close-modal"]');
+const btndelete = document.querySelectorAll('[id^="btn-delete-"]');
 const btn = document.getElementById("btn-modal");
 // const btnclose = document.getElementById("close-modal");
 // const btncloseE = document.getElementById("close-modal-e");
@@ -46,6 +47,15 @@ window.onclick = function (event) {
     // }
 
     console.log(event.target);
+
+    if(event.target.id.includes("btn-delete-")){
+        console.log("delete-pop-up");
+        let id = event.target.id;
+        id = id.replace("btn-delete-","");
+        console.log(id);
+        document.getElementById("crud-modal-"+id).classList.toggle("hidden");
+    }
+
     if (event.target.id.includes("close-modal")) {
         console.log("click");
 
@@ -65,9 +75,11 @@ window.onclick = function (event) {
         searchBar.classList.toggle("bg-emerald-700");
         if (searchForm.classList.contains("hidden")) {
             toggleSearchButton.innerHTML = "Buscar";
+            searchBar.classList.add("zoomh");
             searchButton.classList.add("scale-down-ver-top");
         } else {
             toggleSearchButton.innerHTML = "Ocultar";
+            searchBar.classList.remove("zoomh");
             searchButton.classList.add("scale-up-ver-top");
             searchButton.classList.remove("scale-down-ver-top");
         }

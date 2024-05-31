@@ -58,21 +58,37 @@
                     </div>
                     @foreach ($systs as $syst)
                         <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-3 py-4">
+                            {{-- Campos --}}
                             <div class="text-center">
                                 <span>{{ $syst->code }}</span>
                             </div>
                             <div class="text-center">
                                 <span>{{ $syst->description }}</span>
                             </div>
-                            <div class="text-center">
-                                <span class="mr-1"><x-button
-                                        href="{{ route('sistemas.edit', $syst) }}">Editar</x-button></span>
-                                <form action="{{ route('sistemas.destroy', $syst) }}" method="post" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"><a
-                                            class="p-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl">Eliminar</a></button>
-                                </form>
+                            
+                            {{-- Acciones --}}
+                            <div class=" mx-auto flex">
+                                <div class="zoomh">
+                                    <span class="mr-1">
+                                        <button class="p-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
+
+                                            <a href="{{ route('sistemas.edit', $syst) }}" class="p-2 px-0">
+                                                Editar
+                                            </a>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div class="zoomh">
+                                    <span class="ml-1">
+                                        <button id="btn-delete-{{ $syst->id }}"
+                                            class="p-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl">
+                                            Eliminar
+                                        </button>
+                                    </span>
+                                </div>
+
+                                <x-confirm id="crud-modal-{{ $syst->id }}" idb="close-modal-{{ $syst->id }}" 
+                                    direccion="{{ route('sistemas.destroy', $syst) }}" />
                             </div>
                         </div>
                     @endforeach
@@ -92,15 +108,16 @@
             {{ $systs->links() }}
 
         </div>
-        {{-- @include('syst.create-modal') --}}
         <x-modal.modal titulo="Registrar sistema" direccion="{{ route('sistemas.store') }}" class="hidden" id="crud-modal-s">
             <div class="col-span-2">
                 <x-modal.input nombre="name" titulo="Nombre" placeholder="Escriba el nombre del sistema" tipo="text" />
             </div>
-            <div class="col-span-2">
+            <label for="description" class="block text-sm font-medium text-gray-900">Descripción</label>
+            <textarea placeholder="Escriba la descripción" name="description" id="description" cols="30" rows="10" class="resize-none p-2.5 col-span-2 bg-gray-50 border border-gray-300 text-gray-900 hover:border-emerald-900 focus:ring-emerald-900  focus:border-emerald-900 text-sm rounded-lg  block w-full"></textarea>
+            {{-- <div class="col-span-2">
                 <x-modal.input nombre="description" titulo="Descripción" placeholder="Escriba la descripción"
                     tipo="text" />
-            </div>
+            </div> --}}
         </x-modal.modal>
 
         @isset($systI)
@@ -111,10 +128,13 @@
                     <x-modal.input nombre="name" titulo="Nombre" placeholder="Escriba el nombre del sistema" tipo="text"
                         valor="{{ $systI->code }}" />
                 </div>
-                <div class="col-span-2">
+                <textarea name="description" id="description" cols="30" rows="10">
+                    {{ $systI->description }}
+                </textarea>
+                {{-- <div class="col-span-2">
                     <x-modal.input nombre="description" titulo="Descripción" placeholder="Escriba la descripción" tipo="text"
                         valor="{{ $systI->description }}" />
-                </div>
+                </div> --}}
             </x-modal.modal>
         @endisset
 

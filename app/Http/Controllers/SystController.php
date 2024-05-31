@@ -17,7 +17,7 @@ class SystController extends Controller
         }
         $_SESSION['route-act'] = "inicio";
         // ->on('id_system')->paginate(10)
-        $systs = Syst::with('courses')->paginate(10);
+        $systs = Syst::paginate(10);
         // dd($systs);
         // dd($_SESSION['route-act']);
         return view('syst.index', compact('systs'));

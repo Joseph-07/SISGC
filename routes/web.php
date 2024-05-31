@@ -31,6 +31,7 @@ Route::put('/systems/{id}', [SystController::class, 'update'])->name('sistemas.u
 Route::delete('/systems/{id}', [SystController::class, 'destroy'])->name('sistemas.destroy');
 
 Route::resource('procs', ProcController::class)->names('procesos')->parameters(['procs' => 'id']);
+Route::resource('procs', ProcController::class)->names('procesos')->parameters(['procs' => 'id']);
 Route::resource('courses', CourseController::class)->names('cursos')->parameters(['courses' => 'id']);
 
 
