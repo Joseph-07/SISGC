@@ -39,7 +39,7 @@
                                     </x-modal.select>
                                 @endif
                                 @if (count($systs) == 0)
-                                    <label for="syst" class="mb-1 block">xs</label>
+                                    <label for="syst" class="block mb-2 text-sm font-semibold text-emerald-900">Sistema</label>
 
                                     <span
                                         class="text-sm font-semibold text-red-800 text-center rounded border block p-2 border-red-800">¡Primero
@@ -53,12 +53,12 @@
                                 <textarea placeholder="Escriba la descripción" name="description" id="description" cols="30" rows="10"
                                     class="resize-none p-2.5 col-span-2 bg-gray-50 border border-gray-300 text-gray-900 hover:border-emerald-800 focus:ring-emerald-800  focus:border-emerald-800 text-sm rounded-lg  block w-full"></textarea>
                             </div>
-                            <div class="col-span-2 mt-4">
+                            <div class="col-span-2 mt-4 flex mx-auto gap-4">
                                 @if (count($systs) >= 1)
                                     <button type="submit"
-                                        class="text-white  bg-slate-600 hover:bg-emerald-700 shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+                                        class="text-white flex bg-slate-600 hover:bg-emerald-700 shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center my-auto ">
                                         <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                            xmlns="http://www.w3.org/2000/svg" class="flex">
+                                            xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd"
                                                 d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                                 clip-rule="evenodd"></path>
@@ -67,8 +67,8 @@
                                     </button>
                                 @endif
                                 <button
-                                    class="text-white bg-slate-600 hover:bg-emerald-700 shadow-md font-medium rounded-lg text-sm py-2.5 text-center ">
-                                    <a href="{{ route('procesos.index') }}" class="py-3 px-5">
+                                    class="text-white flex bg-slate-600 hover:bg-emerald-700 shadow-md font-medium rounded-lg text-sm  text-center my-auto">
+                                    <a href="{{ route('procesos.index') }}" class="py-2.5 px-5">
                                         Volver
                                     </a>
                                 </button>
