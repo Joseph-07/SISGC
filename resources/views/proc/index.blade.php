@@ -68,7 +68,7 @@
                                 <span>{{ $proc->description }}</span>
                             </div>
                             <div class="text-center">
-                                <span>{{ $proc->code }}</span>
+                                <span>{{ $proc->syst->code }}</span>
                             </div>
                             <div class=" mx-auto flex">
                                 <div class="zoomh">

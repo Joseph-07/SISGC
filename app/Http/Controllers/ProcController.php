@@ -44,6 +44,9 @@ class ProcController extends Controller
 
     public function destroy($id)
     {
-        dd($id);
+        // dd($id);
+        $proc = Proc::find($id);
+        $proc->delete();
+        return redirect()->route('procesos.index');
     }
 }
