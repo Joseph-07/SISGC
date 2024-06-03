@@ -18,7 +18,7 @@ class CourseFactory extends Factory
     {
         return [
             'code' => fake()->sentence(),
-            'descripcion' => fake()->text(1000),
+            'description' => fake()->text(1000),
             'id_personal' => 1,
             'id_system' => 1,
             'id_clas' => 1,

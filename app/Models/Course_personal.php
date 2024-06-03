@@ -5,10 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Clas extends Model
+class Course_personal extends Model
 {
     use HasFactory;
-    public function courses(){
-        return $this->hasMany(Course::class, 'id_clas' ,'id');
-    }
 }

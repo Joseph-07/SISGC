@@ -13,4 +13,8 @@ class Proc extends Model
     {
         return $this->belongsTo(Syst::class, 'id_system', 'id');
     }
+    
+    public function courses(){
+        return $this->hasMany(Course::class, 'id_proc' ,'id');
+    }
 }

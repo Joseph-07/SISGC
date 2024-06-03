@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->text('descripcion');
+            $table->text('description');
             // $table->unsignedBigInteger('id_personal');
             // $table->unsignedBigInteger('id_system');
             // $table->unsignedBigInteger('id_clas');

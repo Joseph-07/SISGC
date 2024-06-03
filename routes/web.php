@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\ClasController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\PerCourController;
 use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\ProcController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\SystController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,8 +34,13 @@ Route::put('/systems/{id}', [SystController::class, 'update'])->name('sistemas.u
 Route::delete('/systems/{id}', [SystController::class, 'destroy'])->name('sistemas.destroy');
 
 Route::resource('procs', ProcController::class)->names('procesos')->parameters(['procs' => 'id']);
-Route::resource('procs', ProcController::class)->names('procesos')->parameters(['procs' => 'id']);
+Route::resource('specs', SpecialityController::class)->names('especialidades')->parameters(['specs' => 'id']);
+Route::resource('clas', ClasController::class)->names('clases')->parameters(['clas' => 'id']);
 Route::resource('courses', CourseController::class)->names('cursos')->parameters(['courses' => 'id']);
+
+Route::get('/course_personals/{id}', [CourseController::class, 'personals'])->name('cursos.personals');
+Route::get('/course_personals/{id}/create', [CourseController::class, 'personalCreate'])->name('cursos.personalsCreate');
+
 
 
 // Route::middleware('auth')->group(function () {

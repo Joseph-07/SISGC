@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Speciality extends Model
 {
     use HasFactory;
+
+    public function courses(){
+        return $this->hasMany(Course::class, 'id_spec' ,'id');
+    }
 }

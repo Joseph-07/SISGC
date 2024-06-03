@@ -74,9 +74,9 @@
                                 <div class="zoomh">
                                     <span class="mr-1">
                                         <button
-                                            class="p-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
+                                            class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
 
-                                            <a href="{{ route('procesos.edit', $proc) }}" class="p-2 px-0">
+                                            <a href="{{ route('procesos.edit', $proc) }}" class="p-2 ">
                                                 Editar
                                             </a>
                                         </button>

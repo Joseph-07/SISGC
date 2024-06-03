@@ -34,12 +34,20 @@ class ProcController extends Controller
 
     public function edit($id)
     {
-        return view('proc.edit');
+        $proc= Proc::find($id);
+        $systs = Syst::all('id', 'code');
+        return view('proc.edit', compact('proc', 'systs'));
     }
 
     public function update(Request $request, $id)
     {
-        dd($request);
+        // dd($request);
+        $proc = Proc::find($id);
+        $proc->code = $request->name;
+        $proc->description = $request->description;
+        $proc->id_system = $request->id_syst;
+        $proc->save();
+        return redirect()->route('procesos.index');
     }
 
     public function destroy($id)
