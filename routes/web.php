@@ -1,13 +1,16 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClasController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PerCourController;
 use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\ProcController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\SystController;
+use App\Http\Controllers\Type_docsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -37,9 +40,16 @@ Route::resource('procs', ProcController::class)->names('procesos')->parameters([
 Route::resource('specs', SpecialityController::class)->names('especialidades')->parameters(['specs' => 'id']);
 Route::resource('clas', ClasController::class)->names('clases')->parameters(['clas' => 'id']);
 Route::resource('courses', CourseController::class)->names('cursos')->parameters(['courses' => 'id']);
+Route::resource('documents', DocumentController::class)->names('documentos')->parameters(['documents' => 'id']);
+Route::resource('type_docs', Type_docsController::class)->names('tiposDoc')->parameters(['type_docs' => 'id']);
+Route::resource('categories', CategoryController::class)->names('categorias')->parameters(['categories' => 'id']);
 
 Route::get('/course_personals/{id}', [CourseController::class, 'personals'])->name('cursos.personals');
 Route::get('/course_personals/{id}/create', [CourseController::class, 'personalCreate'])->name('cursos.personalsCreate');
+Route::post('/course_personals/{id}', [CourseController::class, 'personalStore'])->name('cursos.personalsStore');
+Route::get('/course_personals/{id}/edit/{id2}', [CourseController::class, 'personalEdit'])->name('cursos.personalsEdit');
+Route::put('/course_personals/{id}/{id2}', [CourseController::class, 'personalUpdate'])->name('cursos.personalsUpdate');
+Route::delete('/course_personals/{id}/{id2}', [CourseController::class, 'personalDestroy'])->name('cursos.personalsDestroy');
 
 
 

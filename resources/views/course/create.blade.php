@@ -127,7 +127,7 @@
                                 @endif
                                 <button
                                     class="text-white flex bg-slate-600 hover:bg-emerald-700 shadow-md font-medium rounded-lg text-sm  text-center my-auto">
-                                    <a href="{{ route('procesos.index') }}" class="py-2.5 px-5">
+                                    <a href="{{ route('cursos.index') }}" class="py-2.5 px-5">
                                         Volver
                                     </a>
                                 </button>

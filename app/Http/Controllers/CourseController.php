@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Clas;
 use App\Models\Course;
 use App\Models\Personal;
+use App\Models\PerXCor;
 use App\Models\Proc;
 use App\Models\Speciality;
 use App\Models\Syst;
@@ -81,6 +82,8 @@ class CourseController extends Controller
         $course = Course::with('personals')->find($id);
         // var_dump($course->personals);
         $personals =$course->personals;
+        // $perXcor = PerXCor::where('id_course', $id)->get();
+        // dd($perXcor);
         // $pivot->approved = false;
         // $pivot->save();
         // dd($personals);
@@ -89,8 +92,39 @@ class CourseController extends Controller
 
     public function personalCreate($id){
         $course = Course::find($id);
-        $personals = Personal::all('id', 'name', 'last_name', 'code');
+        $personals = Personal::all('id', 'name', 'last_name', 'code')->whereNotIn('id', $course->personals->pluck('id'));
         return view('course.personal.create', compact('course', 'personals'));
     }
 
+    public function personalStore($id){
+        $course = Course::with('personals')->find($id);
+        $course->personals()->attach(request('id_personal'), ['approved' => request('approved'), 'test_permision' => request('test_permision'), 'grade' => request('grade')]);
+        return redirect()->route('cursos.personals', $id);
+    }
+
+    public function personalEdit($id, $id2){
+        $course = Course::with('personals')->find($id);
+        $personals = $course->personals;
+        $personal = $personals->where('id', '=', $id2)->first();
+        // dd($personal);
+        return view('course.personal.edit', compact('course', 'personal'));
+    }
+
+    public function personalUpdate($id, $id2){
+        $course = Course::with('personals')->find($id);
+        $personals = $course->personals;
+        $personal = $personals->where('id', '=', $id2)->first();
+        $personal->pivot->approved = request('approved');
+        $personal->pivot->test_permision = request('test_permision');
+        $personal->pivot->grade = request('grade');
+        $personal->pivot->save();
+        return redirect()->route('cursos.personals', $id);
+    }
+
+    public function personalDestroy($id, $id2){
+        $course = Course::with('personals')->find($id);
+        // dd($course->personals);
+        $course->personals()->detach($id2);
+        return redirect()->route('cursos.personals', $id);
+    }
 }

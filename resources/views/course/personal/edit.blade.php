@@ -19,47 +19,47 @@
                 <!-- Modal header -->
                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-emerald-700">
                     <h3 class="text-lg font-semibold text-emerald-900 ">
-                        Registrar nuevo participante
+                        Editar participante
                     </h3>
                 </div>
                 <div>
-                    <form action="{{ route('cursos.personalsStore', $course->id) }}" method="POST" class="p-4">
+                    <form action="{{ route('cursos.personalsUpdate', [$course->id, $personal->id]) }}" method="POST" class="p-4">
                         @csrf
+                        @method('PUT')
                         <input type="text" name="id_course" value="{{ $course->id }}" hidden>
                         <div class="grid grid-cols-2 gap-4">
                             <div class="col-span-1">
-                                @if (count($personals) > 0)
-                                    <x-modal.select nombre="id_personal" titulo="Participante">
-                                        @foreach ($personals as $personal)
-                                            <option value="{{ $personal->id }}">{{ $personal->name }} {{ $personal->last_name }} #{{ $personal->code }}</option>
-                                        @endforeach
-                                    </x-modal.select>
-                                @else
-                                    <label for="syst" class="block mb-2 text-sm font-semibold text-emerald-900">Participante</label>
-                                    <span
-                                        class="text-sm font-semibold text-red-800 text-center rounded border block p-2 border-red-800">¡No hay participantes para agregar al curso!</span>
-                                @endif
+                                <x-modal.input nombre="name" titulo="Participante" placeholder="{{ $personal->name }} {{ $personal->last_name }} #{{ $personal->code }}" tipo="text" deshabilitado="disabled"/>
                                 
 
                             </div>
                             <div class="col-span-1">
                                 <x-modal.input nombre="grade" titulo="Nota" placeholder="Escriba la nota del participante"
-                                    tipo="number" />
+                                    tipo="number" valor="{{ $personal->pivot->grade }}"/>
                             </div>
                             <div>
                                 <x-modal.select nombre="approved" titulo="Aprobado">
-                                    <option value="1">Aprobado</option>
-                                    <option value="0" selected>Reprobado</option>
+                                    @if ($personal->pivot->approved == 1)
+                                        <option value="1" selected>Aprobado</option>
+                                        <option value="0">Reprobado</option>
+                                    @else
+                                        <option value="1">Aprobado</option>
+                                        <option value="0" selected>Reprobado</option>
+                                    @endif
                                 </x-modal.select>
                             </div>
                             <div>
                                 <x-modal.select nombre="test_permision" titulo="Permiso de evaluación">
-                                    <option value="1">Si</option>
-                                    <option value="0" selected>No</option>
+                                    @if ($personal->pivot->test_permision == 1)
+                                        <option value="1" selected>Si</option>
+                                        <option value="0">No</option>
+                                    @else
+                                        <option value="1">Si</option>
+                                        <option value="0" selected>No</option>
+                                    @endif
                                 </x-modal.select>
                             </div>
                             <div class="col-span-2 mt-4 flex mx-auto gap-4">
-                                @if (count($personals) > 0)
                                 <button type="submit"
                                     class="text-white flex bg-slate-600 hover:bg-emerald-700 shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center my-auto ">
                                     <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
@@ -70,7 +70,6 @@
                                     </svg>
                                     Guardar
                                 </button>
-                                @endif
                                 <button
                                     class="text-white flex bg-slate-600 hover:bg-emerald-700 shadow-md font-medium rounded-lg text-sm  text-center my-auto">
                                     <a href="{{ route('cursos.personals', $course->id) }}" class="py-2.5 px-5">
