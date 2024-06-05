@@ -38,7 +38,7 @@
                             </div>
                             <div class="col-span-1 mt-4">
                                 <button type="submit"
-                                    class="text-white flex ml-auto mr-4 bg-slate-600 hover:bg-emerald-700 shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+                                    class="text-white flex ml-auto mr-4 bg-slate-600 hover:bg-emerald-700 shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center zoomh">
                                     <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd"
@@ -50,7 +50,7 @@
                             </div>
                             <div class="col-span-1 mt-4">
                                 <button
-                                    class="text-white  mr-auto ml-4 bg-slate-600 hover:bg-emerald-700 shadow-md font-medium rounded-lg text-sm py-2.5 text-center ">
+                                    class="text-white  mr-auto ml-4 bg-slate-600 hover:bg-emerald-700 shadow-md font-medium rounded-lg text-sm py-2.5 text-center zoomh">
                                     <a href="{{ route('clases.index') }}" class="py-3 px-5">
                                         Volver
                                     </a>

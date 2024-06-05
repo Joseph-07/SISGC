@@ -21,7 +21,7 @@
                 <div
                     class="flex items-center justify-between p-4 md:p-5 border-b rounded-t @if ($errors->any()) border-red-700 @else border-emerald-700 @endif">
                     <h3 class="text-lg font-semibold text-emerald-900 ">
-                        Registrar nuevo documento
+                        Editar documento
                     </h3>
                 </div>
                 @if ($errors->any())
@@ -34,23 +34,39 @@
                     </div>
                 @endif
                 <div>
-                    <form action="{{ route('documentos.store') }}" method="POST" enctype="multipart/form-data" class="p-4">
+                    <form action="{{ route('documentos.update', $document->id) }}" method="POST" enctype="multipart/form-data" class="p-4">
                         @csrf
+                        @method('PUT')
                         <div class="grid grid-cols-3 gap-4">
                             <div class="col-span-1">
-                                <x-modal.input nombre="name" titulo="Nombre" placeholder="Escriba el nombre" tipo="text"
-                                    valor="{{ old('name') }}" />
+                                @if (old('name') != null)
+                                    <x-modal.input nombre="name" titulo="Nombre" placeholder="Escriba el nombre"
+                                        tipo="text" valor="{{ old('name') }}" />
+                                @else
+                                    <x-modal.input nombre="name" titulo="Nombre" placeholder="Escriba el nombre"
+                                        tipo="text" valor="{{ $document->code }}" />
+                                @endif
                             </div>
                             <div class="col-span-1">
                                 @if (count($personals) > 0)
                                     <x-modal.select nombre="id_personal" titulo="Personal">
                                         @foreach ($personals as $personal)
-                                            @if ($personal->id == old('id_personal'))
-                                                <option selected value="{{ $personal->id }}">{{ $personal->name }}
-                                                    {{ $personal->last_name }} #{{ $personal->code }}</option>
+                                            @if (old('id_personal') != null)
+                                                @if ($personal->id == old('id_personal'))
+                                                    <option selected value="{{ $personal->id }}">{{ $personal->name }}
+                                                        {{ $personal->last_name }} #{{ $personal->code }}</option>
+                                                @else
+                                                    <option value="{{ $personal->id }}">{{ $personal->name }}
+                                                        {{ $personal->last_name }} #{{ $personal->code }}</option>
+                                                @endif
                                             @else
-                                                <option value="{{ $personal->id }}">{{ $personal->name }}
-                                                    {{ $personal->last_name }} #{{ $personal->code }}</option>
+                                                @if ($personal->id == $document->id_personal)
+                                                    <option selected value="{{ $personal->id }}">{{ $personal->name }}
+                                                        {{ $personal->last_name }} #{{ $personal->code }}</option>
+                                                @else
+                                                    <option value="{{ $personal->id }}">{{ $personal->name }}
+                                                        {{ $personal->last_name }} #{{ $personal->code }}</option>
+                                                @endif
                                             @endif
                                         @endforeach
                                     </x-modal.select>
@@ -67,11 +83,20 @@
                                 @if (count($categories) > 0)
                                     <x-modal.select nombre="id_category" titulo="Categoría">
                                         @foreach ($categories as $category)
-                                            @if ($category->id == old('id_category'))
-                                                <option selected value="{{ $category->id }}">{{ $category->name }}
-                                                </option>
+                                            @if (old('id_category') != null)
+                                                @if ($category->id == old('id_category'))
+                                                    <option selected value="{{ $category->id }}">{{ $category->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endif
                                             @else
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @if ($category->id == $document->id_category)
+                                                    <option selected value="{{ $category->id }}">{{ $category->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endif
                                             @endif
                                         @endforeach
                                     </x-modal.select>
@@ -88,11 +113,20 @@
                                 @if (count($typeDocs) > 0)
                                     <x-modal.select nombre="id_type_doc" titulo="Tipo de documento">
                                         @foreach ($typeDocs as $typeDoc)
-                                            @if (old('id_type_doc') == $typeDoc->id)
-                                                <option value="{{ $typeDoc->id }}" selected>{{ $typeDoc->name }}
-                                                </option>
+                                            @if (old('id_type_doc') != null)
+                                                @if ($typeDoc->id == old('id_type_doc'))
+                                                    <option selected value="{{ $typeDoc->id }}">{{ $typeDoc->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $typeDoc->id }}">{{ $typeDoc->name }}</option>
+                                                @endif
                                             @else
-                                                <option value="{{ $typeDoc->id }}">{{ $typeDoc->name }}</option>
+                                                @if ($typeDoc->id == $document->id_type_doc)
+                                                    <option selected value="{{ $typeDoc->id }}">{{ $typeDoc->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $typeDoc->id }}">{{ $typeDoc->name }}</option>
+                                                @endif
                                             @endif
                                         @endforeach
                                     </x-modal.select>
@@ -108,14 +142,21 @@
                                 @if (count($systs) > 0)
                                     <x-modal.select nombre="id_system" titulo="Sistema">
                                         @foreach ($systs as $syst)
-                                            @if (old('id_system') == $syst->id)
-                                                <option value="{{ $syst->id }}" selected>{{ $syst->code }}</option>
+                                            @if (old('id_system') != null)
+                                                @if ($syst->id == old('id_system'))
+                                                    <option selected value="{{ $syst->id }}">{{ $syst->code }}</option>
+                                                @else
+                                                    <option value="{{ $syst->id }}">{{ $syst->code }}</option>
+                                                @endif
                                             @else
-                                                <option value="{{ $syst->id }}">{{ $syst->code }}</option>
+                                                @if ($syst->id == $document->id_system)
+                                                    <option selected value="{{ $syst->id }}">{{ $syst->code }}</option>
+                                                @else
+                                                    <option value="{{ $syst->id }}">{{ $syst->code }}</option>
+                                                @endif
                                             @endif
                                             @php
                                                 $valor[] = $syst->procs->pluck('id', 'code');
-                                                $document = null;
                                             @endphp
                                         @endforeach
                                     </x-modal.select>
@@ -147,7 +188,7 @@
                                 <label for="description"
                                     class="block text-sm mb-2 font-semibold text-emerald-900">Descripción</label>
                                 <textarea placeholder="Escriba la descripción" name="description" id="description" cols="30" rows="7"
-                                    class="resize-none p-2.5 col-span-2 bg-gray-50 border border-gray-300 text-gray-900 hover:border-emerald-800 focus:ring-emerald-800  focus:border-emerald-800 text-sm rounded-lg  block w-full">{{ old('description') }}</textarea>
+                                    class="resize-none p-2.5 col-span-2 bg-gray-50 border border-gray-300 text-gray-900 hover:border-emerald-800 focus:ring-emerald-800  focus:border-emerald-800 text-sm rounded-lg  block w-full">@if(old('description') != null){{ old('description') }}@else{{ $document->description }}@endif</textarea>
                             </div>
 
                             <div class="col-span-1">
@@ -155,11 +196,18 @@
                                     @if (count($classes) > 0)
                                         <x-modal.select nombre="id_clas" titulo="Clase">
                                             @foreach ($classes as $clas)
-                                                @if (old('id_clas') == $clas->id)
-                                                    <option value="{{ $clas->id }}" selected>{{ $clas->code }}
-                                                    </option>
+                                                @if(old('id_clas') != null)
+                                                    @if ($clas->id == old('id_clas'))
+                                                        <option selected value="{{ $clas->id }}">{{ $clas->code }}</option>
+                                                    @else
+                                                        <option value="{{ $clas->id }}">{{ $clas->code }}</option>
+                                                    @endif
                                                 @else
-                                                    <option value="{{ $clas->id }}">{{ $clas->code }}</option>
+                                                    @if ($clas->id == $document->id_clas)
+                                                        <option selected value="{{ $clas->id }}">{{ $clas->code }}</option>
+                                                    @else
+                                                        <option value="{{ $clas->id }}">{{ $clas->code }}</option>
+                                                    @endif
                                                 @endif
                                             @endforeach
                                         </x-modal.select>
@@ -176,11 +224,18 @@
                                     @if (count($specs) > 0)
                                         <x-modal.select nombre="id_spec" titulo="Especialidad">
                                             @foreach ($specs as $spec)
-                                                @if (old('id_spec') == $spec->id)
-                                                    <option value="{{ $spec->id }}" selected>{{ $spec->code }}
-                                                    </option>
+                                                @if(old('id_spec') != null)
+                                                    @if ($spec->id == old('id_spec'))
+                                                        <option selected value="{{ $spec->id }}">{{ $spec->code }}</option>
+                                                    @else
+                                                        <option value="{{ $spec->id }}">{{ $spec->code }}</option>
+                                                    @endif
                                                 @else
-                                                    <option value="{{ $spec->id }}">{{ $spec->code }}</option>
+                                                    @if ($spec->id == $document->id_spec)
+                                                        <option selected value="{{ $spec->id }}">{{ $spec->code }}</option>
+                                                    @else
+                                                        <option value="{{ $spec->id }}">{{ $spec->code }}</option>
+                                                    @endif
                                                 @endif
                                             @endforeach
                                         </x-modal.select>

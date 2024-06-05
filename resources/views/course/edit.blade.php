@@ -98,7 +98,7 @@
                             <div class="col-span-2 mt-4 flex mx-auto gap-4">
                                 @if (count($systs) >= 1 && count($procs) >= 1 && count($specs) >= 1 && count($classes) >= 1)
                                     <button type="submit"
-                                        class="text-white flex bg-slate-600 hover:bg-emerald-700 shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center my-auto ">
+                                        class="text-white flex bg-slate-600 hover:bg-emerald-700 shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center my-auto zoomh">
                                         <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd"
@@ -109,7 +109,7 @@
                                     </button>
                                 @endif
                                 <button
-                                    class="text-white flex bg-slate-600 hover:bg-emerald-700 shadow-md font-medium rounded-lg text-sm  text-center my-auto">
+                                    class="text-white flex bg-slate-600 hover:bg-emerald-700 shadow-md font-medium rounded-lg text-sm  text-center my-auto zoomh">
                                     <a href="{{ route('cursos.index') }}" class="py-2.5 px-5">
                                         Volver
                                     </a>

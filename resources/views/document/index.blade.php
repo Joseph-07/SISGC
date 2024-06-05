@@ -42,7 +42,7 @@
                 class="mr-auto ml-1 flex mt-2 bg-slate-600 hover:bg-emerald-700 zoomh text-white text-xs font-semibold p-2 rounded shadow-md ">Regresar</a>
         </div>
 
-        <div class="container max-w-2xl mx-auto mt-6 ">
+        <div class="container max-w-5xl mx-auto mt-6 ">
             {{ $documents->links() }}
 
             <div class=" rounded-md bg-white shadow-xl">
@@ -50,26 +50,27 @@
                     <span class="mx-auto text-md font-semibold text-gray-900 py-1">Lista de documentos</span>
                 </div>
                 @isset($documents)
-                    <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-4 text-white   ">
-                        <span class="text-center ">Nombre</span>
-                        <span class="text-center ">Apellido</span>
-                        <span class="text-center ">Ficha</span>
-                        <span class="text-center">Acciones</span>
+                    <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-6 text-white font-semibold ">
+                        <span class="text-center my-auto">Nombre</span>
+                        <span class="text-center my-auto">Descripción</span>
+                        <span class="text-center my-auto">Sistema</span>
+                        <span class="text-center my-auto">Proceso</span>
+                        <span class="text-center my-auto">Tipo de documento</span>
+                        <span class="text-center my-auto">Acciones</span>
                     </div>
                     @foreach ($documents as $document)
                         <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-4 py-4">
                             {{-- Campos --}}
-                            <div class="hidden">
-                                <span>{{ $document->id }}</span>
-                            </div>
-                            <div class="text-center">
-                                <span>{{ $document->name }}</span>
-                            </div>
-                            <div class="text-center">
-                                <span>{{ $document->last_name }}</span>
-                            </div>
                             <div class="text-center">
                                 <span>{{ $document->code }}</span>
+                            </div>
+                            <div class="text-center">
+                                <span>{{ $document->id_personal }}</span>
+                            </div>
+                            <div class="text-center">
+                                <span>{{ mb_substr($document->description, 0, 100, 'UTF-8') }}@if (mb_strlen($document->description) > 100)
+                                    ...
+                                @endif</span>
                             </div>
 
                             {{-- Acciones --}}
