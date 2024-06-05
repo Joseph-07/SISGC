@@ -133,5 +133,9 @@ class DocumentController extends Controller
         return redirect()->route('documentos.index');
     }
 
+    public function download($id){
+        $document = Document::find($id);
+        return Storage::download($document->url_document);
+    }
 
 }

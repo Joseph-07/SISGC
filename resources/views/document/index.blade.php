@@ -52,14 +52,14 @@
                 @isset($documents)
                     <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-6 text-white font-semibold ">
                         <span class="text-center my-auto">Nombre</span>
-                        <span class="text-center my-auto">Descripción</span>
+                        <span class="text-center my-auto">Facilitador</span>
                         <span class="text-center my-auto">Sistema</span>
                         <span class="text-center my-auto">Proceso</span>
                         <span class="text-center my-auto">Tipo de documento</span>
                         <span class="text-center my-auto">Acciones</span>
                     </div>
                     @foreach ($documents as $document)
-                        <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-4 py-4">
+                        <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-6 py-4">
                             {{-- Campos --}}
                             <div class="text-center">
                                 <span>{{ $document->code }}</span>
@@ -68,13 +68,26 @@
                                 <span>{{ $document->id_personal }}</span>
                             </div>
                             <div class="text-center">
-                                <span>{{ mb_substr($document->description, 0, 100, 'UTF-8') }}@if (mb_strlen($document->description) > 100)
-                                    ...
-                                @endif</span>
+                                <span>{{ $document->id_system }}</span>
+                            </div>
+                            <div class="text-center">
+                                <span>{{ $document->id_proc }}</span>
+                            </div>
+                            <div class="text-center">
+                                <span>{{ $document->id_type_doc }}</span>
                             </div>
 
                             {{-- Acciones --}}
                             <div class=" mx-auto flex">
+                                <div class="zoomh">
+                                    <span class="mr-1">
+                                        <button class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
+                                            <a href="{{ route('documentos.show', $document) }}" class="p-2 ">
+                                                Ver
+                                            </a>
+                                        </button>
+                                    </span>
+                                </div>
                                 <div class="zoomh">
                                     <span class="mr-1">
                                         <button class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">

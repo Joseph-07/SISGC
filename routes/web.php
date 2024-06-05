@@ -51,6 +51,7 @@ Route::get('/course_personals/{id}/edit/{id2}', [CourseController::class, 'perso
 Route::put('/course_personals/{id}/{id2}', [CourseController::class, 'personalUpdate'])->name('cursos.personalsUpdate');
 Route::delete('/course_personals/{id}/{id2}', [CourseController::class, 'personalDestroy'])->name('cursos.personalsDestroy');
 
+Route::get('download/{id}', [DocumentController::class, 'download'])->name('documentos.download');
 
 
 // Route::middleware('auth')->group(function () {

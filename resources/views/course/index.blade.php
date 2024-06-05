@@ -53,7 +53,7 @@
                     <span class="mx-auto text-md font-semibold text-gray-900 py-1">Lista de cursos</span>
                 </div>
                 @isset($courses)
-                    <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-5 text-white   ">
+                    <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-5 text-white font-semibold">
                         <span class="text-center ">Nombre</span>
                         <span class="text-center ">Descripción</span>
                         <span class="text-center">Facilitador</span>
