@@ -12,6 +12,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\SystController;
 use App\Http\Controllers\TermController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\Type_docsController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +47,7 @@ Route::resource('documents', DocumentController::class)->names('documentos')->pa
 Route::resource('type_docs', Type_docsController::class)->names('tiposDoc')->parameters(['type_docs' => 'id']);
 Route::resource('categories', CategoryController::class)->names('categorias')->parameters(['categories' => 'id']);
 Route::resource('terms', TermController::class)->names('terminos')->parameters(['terms' => 'id']);
+Route::resource('tests', TestController::class)->names('evaluaciones')->parameters(['tests' => 'id']);
 
 
 Route::get('/course_personals/{id}', [CourseController::class, 'personals'])->name('cursos.personals');
