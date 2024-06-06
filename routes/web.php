@@ -8,14 +8,16 @@ use App\Http\Controllers\PerCourController;
 use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\ProcController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\SystController;
+use App\Http\Controllers\TermController;
 use App\Http\Controllers\Type_docsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     // dd($_SESSION['route-act']);
-    return view('syst.create');
+    return view('home');
 })->name('inicio');
 
 
@@ -43,6 +45,8 @@ Route::resource('courses', CourseController::class)->names('cursos')->parameters
 Route::resource('documents', DocumentController::class)->names('documentos')->parameters(['documents' => 'id']);
 Route::resource('type_docs', Type_docsController::class)->names('tiposDoc')->parameters(['type_docs' => 'id']);
 Route::resource('categories', CategoryController::class)->names('categorias')->parameters(['categories' => 'id']);
+Route::resource('terms', TermController::class)->names('terminos')->parameters(['terms' => 'id']);
+
 
 Route::get('/course_personals/{id}', [CourseController::class, 'personals'])->name('cursos.personals');
 Route::get('/course_personals/{id}/create', [CourseController::class, 'personalCreate'])->name('cursos.personalsCreate');
@@ -51,7 +55,21 @@ Route::get('/course_personals/{id}/edit/{id2}', [CourseController::class, 'perso
 Route::put('/course_personals/{id}/{id2}', [CourseController::class, 'personalUpdate'])->name('cursos.personalsUpdate');
 Route::delete('/course_personals/{id}/{id2}', [CourseController::class, 'personalDestroy'])->name('cursos.personalsDestroy');
 
+Route::get('/reviews/{id}', [ReviewController::class, 'reviews'])->name('cursos.reviews');
+Route::get('/reviews/{id}/create', [ReviewController::class, 'create'])->name('cursos.reviewsCreate');
+Route::post('/reviews/{id}', [ReviewController::class, 'store'])->name('cursos.reviewsStore');
+Route::get('/reviews/{id}/edit', [ReviewController::class, 'edit'])->name('cursos.reviewsEdit');
+Route::put('/reviews/{id}', [ReviewController::class, 'update'])->name('cursos.reviewsUpdate');
+Route::delete('/reviews/{id}', [ReviewController::class, 'destroy'])->name('cursos.reviewsDestroy');
+
 Route::get('download/{id}', [DocumentController::class, 'download'])->name('documentos.download');
+
+Route::get('/course_docs/{id}', [DocumentController::class, 'docsCourse'])->name('documentos.course');
+Route::get('/course_docs/{id}/create', [DocumentController::class, 'docCourseCreate'])->name('documentos.courseCreate');
+Route::post('/course_docs/{id}', [DocumentController::class, 'docCourseStore'])->name('documentos.courseStore');
+Route::get('/course_docs/{id}/edit/{id2}', [DocumentController::class, 'docCourseEdit'])->name('documentos.courseEdit');
+Route::put('/course_docs/{id}/{id2}', [DocumentController::class, 'docCourseUpdate'])->name('documentos.courseUpdate');
+Route::delete('/course_docs/{id}/{id2}', [DocumentController::class, 'docCourseDestroy'])->name('documentos.courseDestroy');
 
 
 // Route::middleware('auth')->group(function () {

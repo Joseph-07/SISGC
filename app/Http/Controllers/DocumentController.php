@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Clas;
+use App\Models\Course;
 use App\Models\Document;
 use App\Models\Personal;
 use App\Models\Proc;
@@ -16,7 +17,8 @@ use Illuminate\Support\Facades\Storage;
 class DocumentController extends Controller
 {
     public function index(){
-        $documents = Document::paginate(10);
+        $documents = Document::with('syst:id,code', 'proc:id,code', 'personal:id,name,last_name,code','typeDoc:id,name')->paginate(10);
+        // dd($documents);
         return view('document.index', compact('documents'));
     }
 
@@ -73,7 +75,8 @@ class DocumentController extends Controller
     }
 
     public function show($id){
-        //
+        $document = Document::with('syst:id,code', 'proc:id,code', 'personal:id,name,last_name,code','typeDoc:id,name', 'clas:id,code', 'spec:id,code', 'category:id,name')->find($id);
+        return view('document.show', compact('document'));
     }
 
     public function edit($id){
@@ -136,6 +139,51 @@ class DocumentController extends Controller
     public function download($id){
         $document = Document::find($id);
         return Storage::download($document->url_document);
+    }
+
+    public function docsCourse($id){
+        $course = Course::with('docs')->find($id);
+        $documents = $course->docs;
+        // dd($documents);
+        return view('course.doc.index', compact('course', 'documents'));
+
+    }
+
+    public function docCourseCreate($id){
+        $course = Course::find($id);
+        $documents = Document::all('id','code')->whereNotIn('id', $course->docs->pluck('id'));
+        // dd($documents);
+
+        return view('course.doc.create', compact('course', 'documents'));
+    }
+
+    public function docCourseStore($id){
+        $course = Course::with('docs')->find($id);
+        $course->docs()->attach(request('id_document'), ['active' => request('active')]);
+        return redirect()->route('documentos.course', $id);
+    }
+
+    public function docCourseEdit($id, $id2){
+        $course = Course::with('docs')->find($id);
+        $documents = $course->docs;
+        $document = $documents->where('id', '=', $id2)->first();
+        // dd($document);
+        return view('course.doc.edit', compact('course', 'document'));
+    }
+
+    public function docCourseUpdate($id, $id2){
+        $course = Course::with('docs')->find($id);
+        $documents = $course->docs;
+        $document = $documents->where('id', '=', $id2)->first();
+        $document->pivot->active = request('active');
+        $document->pivot->save();
+        return redirect()->route('documentos.course', $id); 
+    }
+
+    public function docCourseDestroy($id, $id2){
+        $course = Course::with('docs')->find($id);
+        $course->docs()->detach($id2);
+        return redirect()->route('documentos.course', $id);
     }
 
 }

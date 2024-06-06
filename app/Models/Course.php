@@ -32,4 +32,8 @@ class Course extends Model
     public function personals(){
         return $this->belongsToMany(Personal::class, 'personal_x_course', 'id_course', 'id_personal')->withPivot('grade', 'approved', 'test_permision');
     }
+
+    public function docs(){
+        return $this->belongsToMany(Document::class, 'course_x_document', 'id_course', 'id_document')->withPivot('active');
+    }
 }

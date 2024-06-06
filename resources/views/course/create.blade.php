@@ -1,6 +1,7 @@
 @extends('master')
 @push('scripts')
     <script type="module" src="http://[::1]:5173/resources/js/xd.js"></script>
+    <script type="module" src="http://[::1]:5173/resources/js/proc.js"></script>
     <script type="module" src="http://[::1]:5173/resources/css/sistema.css"></script>
 @endpush
 @php
@@ -17,11 +18,21 @@
             <!-- Modal content -->
             <div class="relative bg-slate-200 rounded-lg shadow-3xl dark:bg-gray-100 zoom">
                 <!-- Modal header -->
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-emerald-700">
+                <div
+                    class="flex items-center justify-between p-4 md:p-5 border-b rounded-t @if ($errors->any()) border-red-700 @else border-emerald-700 @endif">
                     <h3 class="text-lg font-semibold text-emerald-900 ">
                         Registrar nuevo curso
                     </h3>
                 </div>
+                @if ($errors->any())
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-red-700">
+                        <ul class="text-sm text-red-600 space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div>
                     <form action="{{ route('cursos.store') }}" method="POST" class="p-4">
                         @csrf
@@ -47,35 +58,44 @@
                                 @endif
                             </div>
                             <div class="col-span-1">
-                                @if (count($systs) >= 1)
+                                @if (count($systs) > 0)
                                     <x-modal.select nombre="id_system" titulo="Sistema">
                                         @foreach ($systs as $syst)
-                                            <option value="{{ $syst->id }}">{{ $syst->code }}</option>
+                                            @if (old('id_system') == $syst->id)
+                                                <option value="{{ $syst->id }}" selected>{{ $syst->code }}</option>
+                                            @else
+                                                <option value="{{ $syst->id }}">{{ $syst->code }}</option>
+                                            @endif
+                                            @php
+                                                $valor[] = $syst->procs->pluck('id', 'code');
+                                                $document = null;
+                                            @endphp
                                         @endforeach
                                     </x-modal.select>
-                                @endif
-                                @if (count($systs) == 0)
-                                    <label for="syst" class="block mb-2 text-sm font-semibold text-emerald-900">Sistema</label>
+                                @else
+                                    <label for="id_personal"
+                                        class="block mb-2 text-sm font-semibold text-emerald-900">Sistema</label>
                                     <span
                                         class="text-sm font-semibold text-red-800 text-center rounded border block p-2 border-red-800">¡Primero
                                         debe agregar un sistema!</span>
                                 @endif
                             </div>
-                            <div class="col-span-1">
-                                @if (count($procs) >= 1)
-                                    <x-modal.select nombre="id_proc" titulo="Proceso">
-                                        @foreach ($procs as $proc)
-                                            <option value="{{ $proc->id }}">{{ $proc->code }}</option>
-                                        @endforeach
-                                    </x-modal.select>
-                                @endif
-                                @if (count($procs) == 0)
-                                    <label for="personal" class="block mb-2 text-sm font-semibold text-emerald-900">Proceso</label>
-                                    <span
-                                        class="text-sm font-semibold text-red-800 text-center rounded border block p-2 border-red-800">¡Primero
-                                        debe agregar un Proceso!</span>
-                                @endif
+                            @php
+                                $proc = [
+                                    'select' => $valor,
+                                    'ele' => $document != null ? $document : null,
+                                    'proc' => old('id_proc')!=null ? old('id_proc') : null,
+                                ];
+                                // dd($proc);
+                            @endphp
+
+                            <script>
+                                var proc = {{ Js::from($proc) }};
+                            </script>
+
+                            <div class="col-span-1" id="procesos">
                             </div>
+
                             <div class="col-span-1">
                                 @if (count($specs) >= 1)
                                     <x-modal.select nombre="id_spec" titulo="Especialidad">

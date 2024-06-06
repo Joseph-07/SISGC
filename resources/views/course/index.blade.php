@@ -105,7 +105,7 @@
                                             <button
                                                 class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl mt-2">
 
-                                                <a href="{{ route('cursos.show', $course) }}" class="p-2 ">
+                                                <a href="{{ route('documentos.course', $course) }}" class="p-2 ">
                                                     Documentos
                                                 </a>
                                             </button>
@@ -119,7 +119,7 @@
                                             <button
                                                 class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl mt-2">
 
-                                                <a href="{{ route('cursos.personals', $course) }}" class="p-2 ">
+                                                <a href="{{ route('cursos.reviews', $course) }}" class="p-2 ">
                                                     Reseñas
                                                 </a>
                                             </button>

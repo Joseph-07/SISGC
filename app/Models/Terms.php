@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Review extends Model
+class Terms extends Model
 {
     use HasFactory;
+    protected $table = 'term_glosary';
 
-    public function personal(){
-        return $this->belongsTo(Personal::class, 'id_personal', 'id');
+    public function proc(){
+        return $this->belongsTo(Proc::class, 'id_proc', 'id');
     }
 }

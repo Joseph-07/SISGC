@@ -9,9 +9,9 @@
 @section('content')
     <div class="zoom" id="container">
         <div class="w-full bg-emerald-700 rounded-lg shadow-md text-white px-2 font-semibold text-sm">
-            SISGC » Documentos » Administrar Documentos
+            SISGC » Glosario de terminos » Administrar Terminos
         </div>
-        <h1 class="text-3xl mb-6 text-center font-bold mt-4">Administrar Documentos</h1>
+        <h1 class="text-3xl mb-6 text-center font-bold mt-4">Administrar Terminos</h1>
 
         <div class="  max-w-xl mx-auto shadow-2xl  rounded-lg ring-rounded z-10 " id="searchButton">
             <div class=" bg-slate-600 rounded-lg hover:bg-emerald-700 zoomh" id="searchBar">
@@ -37,62 +37,43 @@
         </div>
 
         <div class="flex mt-2">
-            <a href="{{ route('documentos.create') }}" class="ml-auto mr-1 flex mt-2 zoomh bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold p-2 rounded shadow-md ">Nuevo</a>
+            <a href="{{ route('terminos.create') }}" class="ml-auto mr-1 flex mt-2 zoomh bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold p-2 rounded shadow-md ">Nuevo</a>
             <a href="{{ route('inicio') }}"
                 class="mr-auto ml-1 flex mt-2 bg-slate-600 hover:bg-emerald-700 zoomh text-white text-xs font-semibold p-2 rounded shadow-md ">Regresar</a>
         </div>
 
-        <div class="container max-w-5xl mx-auto mt-6 ">
-            {{ $documents->links() }}
+        <div class="container max-w-2xl mx-auto mt-6 ">
+            {{ $terms->links() }}
 
             <div class=" rounded-md bg-white shadow-xl">
                 <div class=" bg-slate-200 w-full flex border-b-2 border-emerald-800 rounded-t-md shadow-3xl">
-                    <span class="mx-auto text-md font-semibold text-gray-900 py-1">Lista de documentos</span>
+                    <span class="mx-auto text-md font-semibold text-gray-900 py-1">Lista de terminos</span>
                 </div>
-                @isset($documents)
-                    <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-6 text-white font-semibold ">
-                        <span class="text-center my-auto">Nombre</span>
-                        <span class="text-center my-auto">Facilitador</span>
-                        <span class="text-center my-auto">Sistema</span>
-                        <span class="text-center my-auto">Proceso</span>
-                        <span class="text-center my-auto">Tipo de documento</span>
-                        <span class="text-center my-auto">Acciones</span>
+                @isset($terms)
+                    <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-4 text-white   ">
+                        <span class="text-center ">Nombre</span>
+                        <span class="text-center ">Descripción</span>
+                        <span class="text-center ">Proceso</span>
+                        <span class="text-center">Acciones</span>
                     </div>
-                    @foreach ($documents as $document)
-                        <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-6 py-4">
-                            {{-- Campos --}}
+                    @foreach ($terms as $term)
+                        <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-4 py-4">
                             <div class="text-center">
-                                <span>{{ $document->code }}</span>
+                                <span>{{ $term->term }}</span>
                             </div>
                             <div class="text-center">
-                                <span>{{ $document->personal->name }} {{ $document->personal->last_name }}</span>
+                                <span>{{ $term->description }}</span>
                             </div>
                             <div class="text-center">
-                                <span>{{ $document->syst->code }}</span>
+                                <span>{{ $term->proc->code }}</span>
                             </div>
-                            <div class="text-center">
-                                <span>{{ $document->proc->code }}</span>
-                            </div>
-                            <div class="text-center">
-                                <span>{{ $document->typeDoc->name }}</span>
-                            </div>
-                            
-                            {{-- Acciones --}}
                             <div class=" mx-auto flex">
                                 <div class="zoomh">
                                     <span class="mr-1">
-                                        <button class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
-                                            <a href="{{ route('documentos.show', $document) }}" class="p-2 ">
-                                                Ver
-                                            </a>
-                                        </button>
-                                    </span>
-                                </div>
-                                <div class="zoomh">
-                                    <span class="mr-1">
-                                        <button class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
+                                        <button
+                                            class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
 
-                                            <a href="{{ route('documentos.edit', $document) }}" class="p-2 ">
+                                            <a href="{{ route('terminos.edit', $term) }}" class="p-2 ">
                                                 Editar
                                             </a>
                                         </button>
@@ -100,23 +81,23 @@
                                 </div>
                                 <div class="zoomh">
                                     <span class="ml-1">
-                                        <button id="btn-delete-{{ $document->id }}"
+                                        <button id="btn-delete-{{ $term->id }}"
                                             class="p-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl">
                                             Eliminar
                                         </button>
                                     </span>
                                 </div>
 
-                                <x-confirm id="crud-modal-{{ $document->id }}" idb="close-modal-{{ $document->id }}" 
-                                    direccion="{{ route('documentos.destroy', $document) }}" />
+                                <x-confirm id="crud-modal-{{ $term->id }}" idb="close-modal-{{ $term->id }}"
+                                    direccion="{{ route('terminos.destroy', $term) }}" />
                             </div>
                         </div>
                     @endforeach
                 @endisset
-                @if (count($documents) == 0)
+                @if (count($terms) == 0)
                     <div class="bg-slate-100 border-b-2 border-emerald-700  py-4">
                         <div class="text-center">
-                            <span>No hay documentos</span>
+                            <span>No hay terminos</span>
                         </div>
                     </div>
                 @endif
@@ -127,10 +108,33 @@
             <div id="xs">
 
             </div>
-            {{ $documents->links() }}
+            {{ $terms->links() }}
 
 
         </div>
+
+
+        <x-modal.modal titulo="Registrar usuario" direccion="{{ route('procesos.store') }}" class="hidden"
+            id="crud-modal-s" idb="close-modal-s">
+            <div class="col-span-1">
+                <x-modal.input nombre="name" titulo="Nombre" placeholder="Escriba el nombre" tipo="text" />
+            </div>
+            <div class="col-span-1">
+                <x-modal.select nombre="role" titulo="Rol">
+                    <option value="admin">Administrador</option>
+                    <option value="fac">Facilitador</option>
+                    <option value="par" selected>Participante</option>
+                </x-modal.select>
+            </div>
+            <div class="col-span-2">
+                <label for="description" class="block text-sm font-medium text-gray-900">Descripción</label>
+                <textarea placeholder="Escriba la descripción" name="description" id="description" cols="30" rows="10"
+                    class="resize-none p-2.5  bg-gray-50 border border-gray-300 text-gray-900 hover:border-emerald-900 focus:ring-emerald-900  focus:border-emerald-900 text-sm rounded-lg  block w-full"></textarea>
+
+            </div>
+        </x-modal.modal>
+
+        
 
     </div>
 @endsection

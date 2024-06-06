@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Personal;
 use App\Models\PerXCor;
 use App\Models\Proc;
+use App\Models\Review;
 use App\Models\Speciality;
 use App\Models\Syst;
 use Illuminate\Http\Request;
@@ -28,8 +29,26 @@ class CourseController extends Controller
         return view('course.create' , compact('procs', 'classes', 'specs', 'systs', 'personals'));
     }
 
-    public function store()
-    {
+    public function store(Request $request){
+
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'id_system' => 'required',
+            'id_clas' => 'required',
+            'id_proc' => 'required',
+            'id_spec' => 'required',
+            'id_personal' => 'required',
+        ],[
+            'name.required' => 'El campo nombre es obligatorio',
+            'description.required' => 'El campo descripción es obligatorio',
+            'id_system.required' => 'El campo sistema es obligatorio',
+            'id_clas.required' => 'El campo clase es obligatorio',
+            'id_proc.required' => 'El campo proceso es obligatorio',
+            'id_spec.required' => 'El campo especialidad es obligatorio',
+            'id_personal.required' => 'El campo personal es obligatorio',   
+        ]);
+
         $course = new Course();
         $course->code = request('name');
         $course->description = request('description');
@@ -127,4 +146,6 @@ class CourseController extends Controller
         $course->personals()->detach($id2);
         return redirect()->route('cursos.personals', $id);
     }
+
+    
 }
