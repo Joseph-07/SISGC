@@ -37,52 +37,92 @@
         </div>
 
         <div class="flex mt-2">
-            <a href="{{ route('documentos.create') }}" class="ml-auto mr-1 flex mt-2 zoomh bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold p-2 rounded shadow-md ">Nuevo</a>
+            <a href="{{ route('evaluaciones.create') }}"
+                class="ml-auto mr-1 flex mt-2 zoomh bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold p-2 rounded shadow-md ">Nuevo</a>
             <a href="{{ route('inicio') }}"
                 class="mr-auto ml-1 flex mt-2 bg-slate-600 hover:bg-emerald-700 zoomh text-white text-xs font-semibold p-2 rounded shadow-md ">Regresar</a>
         </div>
 
-        <div class="container max-w-5xl mx-auto mt-6 ">
+        <div class="container max-w-6xl mx-auto mt-6 ">
             {{ $tests->links() }}
 
             <div class=" rounded-md bg-white shadow-xl">
                 <div class=" bg-slate-200 w-full flex border-b-2 border-emerald-800 rounded-t-md shadow-3xl">
-                    <span class="mx-auto text-md font-semibold text-gray-900 py-1">Lista de documentos</span>
+                    <span class="mx-auto text-md font-semibold text-gray-900 py-1">Lista de evaluaciones</span>
                 </div>
                 @isset($tests)
-                    <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-6 text-white font-semibold ">
+                    <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-7 text-white font-semibold ">
                         <span class="text-center my-auto">Nombre</span>
+                        <span class="text-center my-auto col-span-2">Descripción</span>
                         <span class="text-center my-auto">Facilitador</span>
-                        <span class="text-center my-auto">Sistema</span>
-                        <span class="text-center my-auto">Proceso</span>
-                        <span class="text-center my-auto">Tipo de documento</span>
+                        <span class="text-center my-auto">Tiempo</span>
                         <span class="text-center my-auto">Acciones</span>
+                        <span class="text-center my-auto">Admin</span>
+
                     </div>
                     @foreach ($tests as $test)
-                        <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-6 py-4">
+                        <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-7 py-4">
                             {{-- Campos --}}
                             <div class="text-center">
-                                <span>{{ $document->code }}</span>
+                                <span>{{ $test->code }}</span>
                             </div>
+
+                            <div class="text-center col-span-2">
+                                <span>{{ $test->description }}</span>
+                            </div>
+
                             <div class="text-center">
-                                <span>{{ $document->personal->name }} {{ $document->personal->last_name }}</span>
+                                <span>{{ $test->personal->name }} {{ $test->personal->last_name }}</span>
                             </div>
+
                             <div class="text-center">
-                                <span>{{ $document->syst->code }}</span>
+                                <span>{{ $test->time }}</span>
                             </div>
-                            <div class="text-center">
-                                <span>{{ $document->proc->code }}</span>
-                            </div>
-                            <div class="text-center">
-                                <span>{{ $document->typeDoc->name }}</span>
-                            </div>
-                            
                             {{-- Acciones --}}
+                            <div class="mx-auto flex">
+                                <div class="zoomh" title="Presentar">
+                                    <button
+                                        class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
+                                        <a href="{{ route('evaluaciones.show', $test) }}" class="p-2 " title="Presentar">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+
+                                        </a>
+                                    </button>
+                                </div>
+                                <div class="mx-1"></div>
+                                <div class="zoomh" >
+                                    <button
+                                        class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
+                                        <a href="{{ route('evaluaciones.edit', $test) }}" class="p-2 " title="Previsualizar">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </a>
+                                    </button>
+                                </div>
+                                <div class="mx-1"></div>
+                                <div class="zoomh" >
+                                    <button
+                                        class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
+                                        <a href="{{ route('evaluaciones.edit', $test) }}" class="p-2 " title="Comparar resultados">
+                                            <i class="fa-solid fa-layer-group"></i>
+                                        </a>
+                                    </button>
+                                </div>
+                                <div class="mx-1"></div>
+                                <div class="zoomh" >
+                                    <button
+                                        class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
+                                        <a href="{{ route('evaluaciones.edit', $test) }}" class="p-2 " title="Comparar resultados">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                    </button>
+                                </div>
+                            </div>
                             <div class=" mx-auto flex">
                                 <div class="zoomh">
                                     <span class="mr-1">
-                                        <button class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
-                                            <a href="{{ route('documentos.show', $document) }}" class="p-2 ">
+                                        <button
+                                            class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
+                                            <a href="{{ route('evaluaciones.show', $test) }}" class="p-2 ">
                                                 Ver
                                             </a>
                                         </button>
@@ -90,9 +130,10 @@
                                 </div>
                                 <div class="zoomh">
                                     <span class="mr-1">
-                                        <button class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
+                                        <button
+                                            class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
 
-                                            <a href="{{ route('documentos.edit', $document) }}" class="p-2 ">
+                                            <a href="{{ route('evaluaciones.edit', $test) }}" class="p-2 ">
                                                 Editar
                                             </a>
                                         </button>
@@ -100,15 +141,15 @@
                                 </div>
                                 <div class="zoomh">
                                     <span class="ml-1">
-                                        <button id="btn-delete-{{ $document->id }}"
+                                        <button id="btn-delete-{{ $test->id }}"
                                             class="p-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl">
                                             Eliminar
                                         </button>
                                     </span>
                                 </div>
 
-                                <x-confirm id="crud-modal-{{ $document->id }}" idb="close-modal-{{ $document->id }}" 
-                                    direccion="{{ route('documentos.destroy', $document) }}" />
+                                <x-confirm id="crud-modal-{{ $test->id }}" idb="close-modal-{{ $test->id }}"
+                                    direccion="{{ route('evaluaciones.destroy', $test) }}" />
                             </div>
                         </div>
                     @endforeach
@@ -121,7 +162,7 @@
                     </div>
                 @endif
                 <div class="bg-white rounded-b-md h-5">
-
+                    
                 </div>
             </div>
             <div id="xs">

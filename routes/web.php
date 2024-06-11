@@ -8,12 +8,15 @@ use App\Http\Controllers\PerCourController;
 use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\ProcController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\SystController;
 use App\Http\Controllers\TermController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\Type_docsController;
+use App\Http\Controllers\Type_questsController;
+use App\Http\Controllers\Type_testsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -45,6 +48,8 @@ Route::resource('clas', ClasController::class)->names('clases')->parameters(['cl
 Route::resource('courses', CourseController::class)->names('cursos')->parameters(['courses' => 'id']);
 Route::resource('documents', DocumentController::class)->names('documentos')->parameters(['documents' => 'id']);
 Route::resource('type_docs', Type_docsController::class)->names('tiposDoc')->parameters(['type_docs' => 'id']);
+Route::resource('type_quest', Type_questsController::class)->names('tiposQuest')->parameters(['type_quest' => 'id']);
+Route::resource('type_tests', Type_testsController::class)->names('tiposTest')->parameters(['type_tests' => 'id']);
 Route::resource('categories', CategoryController::class)->names('categorias')->parameters(['categories' => 'id']);
 Route::resource('terms', TermController::class)->names('terminos')->parameters(['terms' => 'id']);
 Route::resource('tests', TestController::class)->names('evaluaciones')->parameters(['tests' => 'id']);
@@ -72,6 +77,12 @@ Route::post('/course_docs/{id}', [DocumentController::class, 'docCourseStore'])-
 Route::get('/course_docs/{id}/edit/{id2}', [DocumentController::class, 'docCourseEdit'])->name('documentos.courseEdit');
 Route::put('/course_docs/{id}/{id2}', [DocumentController::class, 'docCourseUpdate'])->name('documentos.courseUpdate');
 Route::delete('/course_docs/{id}/{id2}', [DocumentController::class, 'docCourseDestroy'])->name('documentos.courseDestroy');
+
+Route::get('/question/{id}/create', [QuestionController::class, 'create'])->name('preguntas.create');
+Route::post('/question/{id}', [QuestionController::class, 'store'])->name('preguntas.store');
+Route::get('/question/{id}/edit', [QuestionController::class, 'edit'])->name('preguntas.edit');
+Route::put('/question/{id}', [QuestionController::class, 'update'])->name('preguntas.update');
+Route::delete('/question/{id}', [QuestionController::class, 'destroy'])->name('preguntas.destroy');
 
 
 // Route::middleware('auth')->group(function () {

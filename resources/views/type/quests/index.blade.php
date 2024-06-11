@@ -9,9 +9,9 @@
 @section('content')
     <div class="zoom" id="container">
         <div class="w-full bg-emerald-700 rounded-lg shadow-md text-white px-2 font-semibold text-sm">
-            SISGC » Glosario de terminos » Administrar Terminos
+            SISGC » Evaluaciones » Administrar Tipos de Preguntas
         </div>
-        <h1 class="text-3xl mb-6 text-center font-bold mt-4">Administrar Terminos</h1>
+        <h1 class="text-3xl mb-6 text-center font-bold mt-4">Administrar Tipos de Pregunta</h1>
 
         <div class="  max-w-xl mx-auto shadow-2xl  rounded-lg ring-rounded z-10 " id="searchButton">
             <div class=" bg-slate-600 rounded-lg hover:bg-emerald-700 zoomh" id="searchBar">
@@ -37,43 +37,35 @@
         </div>
 
         <div class="flex mt-2">
-            <a href="{{ route('terminos.create') }}" class="ml-auto mr-1 flex mt-2 zoomh bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold p-2 rounded shadow-md ">Nuevo</a>
+            <a href="{{ route('tiposQuest.create') }}" class="ml-auto mr-1 flex mt-2 zoomh bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold p-2 rounded shadow-md ">Nuevo</a>
             <a href="{{ route('inicio') }}"
                 class="mr-auto ml-1 flex mt-2 bg-slate-600 hover:bg-emerald-700 zoomh text-white text-xs font-semibold p-2 rounded shadow-md ">Regresar</a>
         </div>
 
-        <div class="container max-w-3xl mx-auto mt-6 ">
-            {{ $terms->links() }}
+        <div class="container max-w-2xl mx-auto mt-6 ">
+            {{ $typeQuests->links() }}
 
             <div class=" rounded-md bg-white shadow-xl">
                 <div class=" bg-slate-200 w-full flex border-b-2 border-emerald-800 rounded-t-md shadow-3xl">
-                    <span class="mx-auto text-md font-semibold text-gray-900 py-1">Lista de terminos</span>
+                    <span class="mx-auto text-md font-semibold text-gray-900 py-1">Lista de tipos de pregunta</span>
                 </div>
-                @isset($terms)
-                    <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-5 text-white   ">
+                @isset($typeQuests)
+                    <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-2 text-white   ">
                         <span class="text-center ">Nombre</span>
-                        <span class="text-center col-span-2 ">Descripción</span>
-                        <span class="text-center ">Proceso</span>
                         <span class="text-center">Acciones</span>
                     </div>
-                    @foreach ($terms as $term)
-                        <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-5 py-4">
+                    @foreach ($typeQuests as $typeQuest)
+                        <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-2 py-4">
                             <div class="text-center">
-                                <span>{{ $term->term }}</span>
+                                <span>{{ $typeQuest->name }}</span>
                             </div>
-                            <div class="text-center col-span-2">
-                                <span>{{ $term->description }}</span>
-                            </div>
-                            <div class="text-center">
-                                <span>{{ $term->proc->code }}</span>
-                            </div>
+                            {{-- Acciones --}}
                             <div class=" mx-auto flex">
                                 <div class="zoomh">
                                     <span class="mr-1">
-                                        <button
-                                            class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
+                                        <button class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
 
-                                            <a href="{{ route('terminos.edit', $term) }}" class="p-2 ">
+                                            <a href="{{ route('tiposQuest.edit', $typeQuest) }}" class="p-2 ">
                                                 Editar
                                             </a>
                                         </button>
@@ -81,23 +73,23 @@
                                 </div>
                                 <div class="zoomh">
                                     <span class="ml-1">
-                                        <button id="btn-delete-{{ $term->id }}"
+                                        <button id="btn-delete-{{ $typeQuest->id }}"
                                             class="p-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl">
                                             Eliminar
                                         </button>
                                     </span>
                                 </div>
 
-                                <x-confirm id="crud-modal-{{ $term->id }}" idb="close-modal-{{ $term->id }}"
-                                    direccion="{{ route('terminos.destroy', $term) }}" />
+                                <x-confirm id="crud-modal-{{ $typeQuest->id }}" idb="close-modal-{{ $typeQuest->id }}" 
+                                    direccion="{{ route('tiposQuest.destroy', $typeQuest) }}" />
                             </div>
                         </div>
                     @endforeach
                 @endisset
-                @if (count($terms) == 0)
+                @if (count($typeQuests) == 0)
                     <div class="bg-slate-100 border-b-2 border-emerald-700  py-4">
                         <div class="text-center">
-                            <span>No hay terminos</span>
+                            <span>No hay tipos de pregunta</span>
                         </div>
                     </div>
                 @endif
@@ -108,33 +100,10 @@
             <div id="xs">
 
             </div>
-            {{ $terms->links() }}
+            {{ $typeQuests->links() }}
 
 
         </div>
-
-
-        <x-modal.modal titulo="Registrar usuario" direccion="{{ route('procesos.store') }}" class="hidden"
-            id="crud-modal-s" idb="close-modal-s">
-            <div class="col-span-1">
-                <x-modal.input nombre="name" titulo="Nombre" placeholder="Escriba el nombre" tipo="text" />
-            </div>
-            <div class="col-span-1">
-                <x-modal.select nombre="role" titulo="Rol">
-                    <option value="admin">Administrador</option>
-                    <option value="fac">Facilitador</option>
-                    <option value="par" selected>Participante</option>
-                </x-modal.select>
-            </div>
-            <div class="col-span-2">
-                <label for="description" class="block text-sm font-medium text-gray-900">Descripción</label>
-                <textarea placeholder="Escriba la descripción" name="description" id="description" cols="30" rows="10"
-                    class="resize-none p-2.5  bg-gray-50 border border-gray-300 text-gray-900 hover:border-emerald-900 focus:ring-emerald-900  focus:border-emerald-900 text-sm rounded-lg  block w-full"></textarea>
-
-            </div>
-        </x-modal.modal>
-
-        
 
     </div>
 @endsection

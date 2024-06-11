@@ -5,11 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Test extends Model
+class Type_quest extends Model
 {
     use HasFactory;
 
-    public function personal(){
-        return $this->belongsTo(Personal::class, 'id_personal', 'id');
-    }
+    protected $table = 'type_questions';
 }
