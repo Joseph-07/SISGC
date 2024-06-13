@@ -1,6 +1,7 @@
 @extends('master')
 @push('scripts')
     <script type="module" src="http://[::1]:5173/resources/js/xd.js"></script>
+    <script type="module" src="http://[::1]:5173/resources/js/tab.js"></script>
     <script type="module" src="http://[::1]:5173/resources/css/sistema.css"></script>
 @endpush
 @php
@@ -12,6 +13,9 @@
 @endsection
 @section('modal')
     <div class="bg-black bg-opacity-50 flex h-full">
+        <script>
+            var selec = {{ Js::from($selec) }};
+        </script>
 
         <div class="p-4 w-full  max-w-7xl mx-auto mt-24">
             <!-- Modal content -->
@@ -19,13 +23,13 @@
                 <!-- Modal header -->
                 <div
                     class="flex    border-b rounded-t @if ($errors->any()) border-red-700 @else border-emerald-700 @endif">
-                    <div class="bg-slate-200 p-5   rounded-tl-lg roun">
-                        <h3 class="text-lg font-semibold  text-emerald-900 ">
+                    <div class="" >
+                        <h3 class="text-lg font-semibold bg-slate-200 rounded-tl-lg text-emerald-900 p-5" id="tag-1">
                             Editar evaluación
-                        </h3>   
+                        </h3>
                     </div>
-                    
-                    <h3 class="text-lg font-semibold p-5  text-emerald-900 ">
+
+                    <h3 class="text-lg font-semibold p-5  text-emerald-900 " id="tag-2">
                         Preguntas
                     </h3>
                 </div>
@@ -38,9 +42,9 @@
                         </ul>
                     </div>
                 @endif
-                <div class="hidden">
-                    <form action="{{ route('evaluaciones.update', $test->id) }}" method="POST" enctype="multipart/form-data"
-                        class="p-4">
+                <div id="tab-1" class="hidden">
+                    <form action="{{ route('evaluaciones.update', $test->id) }}" method="POST"
+                        enctype="multipart/form-data" class="p-4">
                         @csrf
                         @method('PUT')
                         <div class="grid grid-cols-3 gap-4">
@@ -50,8 +54,8 @@
                                     <x-modal.input tipo="text" nombre="name" titulo="Nombre"
                                         placeholder="Escriba el nombre" valor="{{ old('name') }}" />
                                 @else
-                                <x-modal.input tipo="text" nombre="name" titulo="Nombre"
-                                placeholder="Escriba el nombre" valor="{{ $test->code }}"/>
+                                    <x-modal.input tipo="text" nombre="name" titulo="Nombre"
+                                        placeholder="Escriba el nombre" valor="{{ $test->code }}" />
                                 @endif
                             </div>
 
@@ -62,13 +66,15 @@
                                         @foreach ($courses as $course)
                                             @if (old('id_course') != null)
                                                 @if ($course->id == old('id_course'))
-                                                    <option value="{{ $course->id }}" selected>{{ $course->code }}</option>
+                                                    <option value="{{ $course->id }}" selected>{{ $course->code }}
+                                                    </option>
                                                 @else
                                                     <option value="{{ $course->id }}">{{ $course->code }}</option>
                                                 @endif
                                             @else
                                                 @if ($course->id == $test->id_course)
-                                                    <option value="{{ $course->id }}" selected>{{ $course->code }}</option>
+                                                    <option value="{{ $course->id }}" selected>{{ $course->code }}
+                                                    </option>
                                                 @else
                                                     <option value="{{ $course->id }}">{{ $course->code }}</option>
                                                 @endif
@@ -76,7 +82,8 @@
                                         @endforeach
                                     </x-modal.select>
                                 @else
-                                    <label for="id_personal" class="block mb-2 text-sm font-semibold text-emerald-900">Curso</label>
+                                    <label for="id_personal"
+                                        class="block mb-2 text-sm font-semibold text-emerald-900">Curso</label>
                                     <span
                                         class="text-sm font-semibold text-red-800 text-center rounded border block p-2 border-red-800">¡Primero
                                         debe agregar algún curso!</span>
@@ -90,23 +97,28 @@
                                         @foreach ($personals as $personal)
                                             @if (old('id_personal') != null)
                                                 @if ($personal->id == old('id_personal'))
-                                                    <option value="{{ $personal->id }}" selected>{{ $personal->name }} {{ $personal->last_name }} #{{ $personal->code}}
+                                                    <option value="{{ $personal->id }}" selected>{{ $personal->name }}
+                                                        {{ $personal->last_name }} #{{ $personal->code }}
                                                     </option>
                                                 @else
-                                                    <option value="{{ $personal->id }}">{{ $personal->name }} {{ $personal->last_name }} #{{ $personal->code}}</option>
+                                                    <option value="{{ $personal->id }}">{{ $personal->name }}
+                                                        {{ $personal->last_name }} #{{ $personal->code }}</option>
                                                 @endif
                                             @else
                                                 @if ($personal->id == $test->id_personal)
-                                                    <option value="{{ $personal->id }}" selected>{{ $personal->name }} {{ $personal->last_name }} #{{ $personal->code}}
+                                                    <option value="{{ $personal->id }}" selected>{{ $personal->name }}
+                                                        {{ $personal->last_name }} #{{ $personal->code }}
                                                     </option>
                                                 @else
-                                                    <option value="{{ $personal->id }}">{{ $personal->name }} {{ $personal->last_name }} #{{ $personal->code}}</option>
+                                                    <option value="{{ $personal->id }}">{{ $personal->name }}
+                                                        {{ $personal->last_name }} #{{ $personal->code }}</option>
                                                 @endif
                                             @endif
                                         @endforeach
                                     </x-modal.select>
                                 @else
-                                    <label for="id_personal" class="block mb-2 text-sm font-semibold text-emerald-900">Facilitador</label>
+                                    <label for="id_personal"
+                                        class="block mb-2 text-sm font-semibold text-emerald-900">Facilitador</label>
                                     <span
                                         class="text-sm font-semibold text-red-800 text-center rounded border block p-2 border-red-800">¡Primero
                                         debe agregar aquí un facilitador!</span>
@@ -128,27 +140,31 @@
                                                 @foreach ($typeTests as $typeTest)
                                                     @if (old('id_type_test') != null)
                                                         @if ($typeTest->id == old('id_type_test'))
-                                                            <option value="{{ $typeTest->id }}" selected>{{ $typeTest->name }}</option>
+                                                            <option value="{{ $typeTest->id }}" selected>
+                                                                {{ $typeTest->name }}</option>
                                                         @else
-                                                            <option value="{{ $typeTest->id }}">{{ $typeTest->name }}</option>
+                                                            <option value="{{ $typeTest->id }}">{{ $typeTest->name }}
+                                                            </option>
                                                         @endif
                                                     @else
                                                         @if ($typeTest->id == $test->id_type_test)
-                                                            <option value="{{ $typeTest->id }}" selected>{{ $typeTest->name }}</option>
+                                                            <option value="{{ $typeTest->id }}" selected>
+                                                                {{ $typeTest->name }}</option>
                                                         @else
-                                                            <option value="{{ $typeTest->id }}">{{ $typeTest->name }}</option>
+                                                            <option value="{{ $typeTest->id }}">{{ $typeTest->name }}
+                                                            </option>
                                                         @endif
                                                     @endif
                                                 @endforeach
                                             </x-modal.select>
                                         @else
-                                            <label for="id_type_test" class="block mb-2 text-sm font-semibold text-emerald-900">Tipo</label>
+                                            <label for="id_type_test"
+                                                class="block mb-2 text-sm font-semibold text-emerald-900">Tipo</label>
                                             <span
                                                 class="text-sm font-semibold text-red-800 text-center rounded border block p-2 border-red-800">¡Primero
                                                 debe agregar un tipo de prueba!</span>
-                                            
                                         @endif
-                                        
+
                                     </div>
 
                                 </div>
@@ -161,7 +177,7 @@
                                                 @if (old('time_h') != null)
                                                     <x-modal.input nombre="time_h" titulo="Horas"
                                                         placeholder="Escriba las horas" tipo="number" min="min=0"
-                                                        max="max=8" valor="{{ old('time_h') }}"  />
+                                                        max="max=8" valor="{{ old('time_h') }}" />
                                                 @else
                                                     <x-modal.input nombre="time_h" titulo="Horas"
                                                         placeholder="Escriba las horas" tipo="number" min="min=0"
@@ -202,7 +218,7 @@
                                             @else
                                                 <option value="1">Si</option>
                                                 <option value="0" selected>No</option>
-                                            @endif                                            
+                                            @endif
                                         @endif
                                     </x-modal.select>
                                 </div>
@@ -215,7 +231,9 @@
                                             placeholder="Escriba la nota maxima" tipo="number" min="1"
                                             valor="{{ old('grade_max') }}" />
                                     @else
-                                        <x-modal.input nombre="grade_max" titulo="Nota maxima"  placeholder="Escriba la nota maxima" tipo="number" min="1" valor="{{ $test->grade_max }}" />                                        
+                                        <x-modal.input nombre="grade_max" titulo="Nota maxima"
+                                            placeholder="Escriba la nota maxima" tipo="number" min="1"
+                                            valor="{{ $test->grade_max }}" />
                                     @endif
                                 </div>
                                 <div class="col-span-1 ">
@@ -255,40 +273,77 @@
                         </div>
                     </form>
                 </div>
-                <div>
+                <div id="tab-2" class="hidden">
                     <div class="container max-w-3xl mx-auto mt-6 min-h-40">
                         <div class=" rounded-md bg-white shadow-xl">
                             <div class=" bg-slate-200 w-full flex border-b-2 border-emerald-800 rounded-t-md shadow-3xl">
                                 <span class="mx-auto text-md font-semibold text-gray-900 py-1">Lista de preguntas</span>
                             </div>
-                            <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-5 text-white font-semibold ">
-                                <span class="text-center my-auto">Orden</span>
+                            <div
+                                class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-4 text-white font-semibold ">
                                 <span class="text-center my-auto">Enunciado</span>
                                 <span class="text-center my-auto">¿Justificable?</span>
                                 <span class="text-center my-auto">Grupo</span>
                                 <span class="text-center my-auto">Acciones</span>
                             </div>
-                            @foreach ($questions as $question)
-                                {{$question->id}}
-                            @endforeach
+                            @if (count($questions) > 0)
+                                @foreach ($questions as $question)
+                                    <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-4 py-4">
+                                        <span class="text-center my-auto">{{ $question->enunce }}</span>
+                                        <span class="text-center my-auto">@if ($question->require_jus  == 1)
+                                            <i class="fas fa-check text-emerald-600"></i>
+                                        @else
+                                                <i class="fas fa-times text-red-600"></i>
+                                        @endif</span>
+                                        <span class="text-center my-auto">{{ $question->group }}</span>
+                                        <div class=" mx-auto flex">
+                                            <div class="zoomh">
+                                                <span class="mr-1">
+                                                    <button
+                                                        class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
+
+                                                        <a href="{{ route('preguntas.edit', $question) }}"
+                                                            class="p-2 ">
+                                                            Editar
+                                                        </a>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                            <div class="zoomh">
+                                                <span class="ml-1">
+                                                    <button id="btn-delete-{{ $question->id }}"
+                                                        class="p-2 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl">
+                                                        Eliminar
+                                                    </button>
+                                                </span>
+                                            </div>
+
+                                            <x-confirm id="crud-modal-{{ $question->id }}"
+                                                idb="close-modal-{{ $question->id }}"
+                                                direccion="{{ route('preguntas.destroy', $question->id) }}" />
+                                        </div>
+
+                                    </div>
+                                @endforeach
+                            @endif
                             @if (count($questions) == 0)
-                            <div class="bg-slate-100 border-b-2 border-emerald-700  py-4">
-                                <div class="text-center">
-                                    <span>No hay preguntas en la evaluación</span>
+                                <div class="bg-slate-100 border-b-2 border-emerald-700  py-4">
+                                    <div class="text-center">
+                                        <span>No hay preguntas en la evaluación</span>
+                                    </div>
                                 </div>
-                            </div>
                             @endif
                             <div class="bg-white rounded-b-md h-5">
-                    
+
                             </div>
                         </div>
                         <div class="flex mt-2">
                             <a href="{{ route('preguntas.create', $test->id) }}"
                                 class="ml-auto mr-1 flex mt-2 zoomh bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold p-2 rounded shadow-md ">Agregar</a>
-                            <a href="{{ route('inicio') }}"
+                            <a href="{{ route('evaluaciones.index') }}"
                                 class="mr-auto ml-1 flex mt-2 bg-slate-600 hover:bg-emerald-700 zoomh text-white text-xs font-semibold p-2 rounded shadow-md ">Volver</a>
                         </div>
-                        <div class="h-5"></div>
+                        <div class="h-5" id="container"></div>
                     </div>
                 </div>
             </div>

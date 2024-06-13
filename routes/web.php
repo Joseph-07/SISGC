@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClasController;
 use App\Http\Controllers\CourseController;
@@ -52,8 +53,11 @@ Route::resource('type_quest', Type_questsController::class)->names('tiposQuest')
 Route::resource('type_tests', Type_testsController::class)->names('tiposTest')->parameters(['type_tests' => 'id']);
 Route::resource('categories', CategoryController::class)->names('categorias')->parameters(['categories' => 'id']);
 Route::resource('terms', TermController::class)->names('terminos')->parameters(['terms' => 'id']);
-Route::resource('tests', TestController::class)->names('evaluaciones')->parameters(['tests' => 'id']);
+Route::resource('tests', TestController::class)->names('evaluaciones')->parameters(['tests' => 'id'])->except(['edit']);
 
+Route::get('tests/{id}/edit/{selec?}', [TestController::class, 'edit'])->name('evaluaciones.edit');
+Route::get('question/{id}/edit/{selec?}', [QuestionController::class, 'edit'])->name('preguntas.edit');
+Route::get('answer/{id}/edit/{selec?}', [AnswerController::class, 'edit'])->name('respuestas.edit');
 
 Route::get('/course_personals/{id}', [CourseController::class, 'personals'])->name('cursos.personals');
 Route::get('/course_personals/{id}/create', [CourseController::class, 'personalCreate'])->name('cursos.personalsCreate');
@@ -80,9 +84,13 @@ Route::delete('/course_docs/{id}/{id2}', [DocumentController::class, 'docCourseD
 
 Route::get('/question/{id}/create', [QuestionController::class, 'create'])->name('preguntas.create');
 Route::post('/question/{id}', [QuestionController::class, 'store'])->name('preguntas.store');
-Route::get('/question/{id}/edit', [QuestionController::class, 'edit'])->name('preguntas.edit');
 Route::put('/question/{id}', [QuestionController::class, 'update'])->name('preguntas.update');
 Route::delete('/question/{id}', [QuestionController::class, 'destroy'])->name('preguntas.destroy');
+
+Route::get('/answer/{id}/create', [AnswerController::class, 'create'])->name('respuestas.create');
+Route::post('/answer/{id}', [AnswerController::class, 'store'])->name('respuestas.store');
+Route::put('/answer/{id}', [AnswerController::class, 'update'])->name('respuestas.update');
+Route::delete('/answer/{id}', [AnswerController::class, 'destroy'])->name('respuestas.destroy');
 
 
 // Route::middleware('auth')->group(function () {

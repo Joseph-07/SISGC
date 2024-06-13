@@ -33,7 +33,7 @@
                     </div>
                 @endif
                 <div>
-                    <form action="{{ route('cursos.store') }}" method="POST" class="p-4">
+                    <form action="{{ route('preguntas.store', $test) }}" method="POST" enctype="multipart/form-data" class="p-4">
                         @csrf
                         <div class="grid grid-cols-3 gap-4">
 
@@ -41,13 +41,15 @@
                                 <x-modal.input tipo="text" nombre="name" titulo="Evaluación"
                                     placeholder="{{ $test->code }}" deshabilitado="disabled" />
                             </div>
-
+                            
                             <div class="col-span-2">
                                 <label for="enunce"
                                     class="block text-sm mb-2 font-semibold text-emerald-900">Enunciado</label>
                                 <textarea name="enunce" id="enunce" cols="30" rows="1"
-                                    class="resize-none bg-gray-50 border border-gray-300 text-gray-900 hover:border-emerald-900 focus:ring-emerald-800  focus:border-emerald-800 text-sm rounded-lg  block w-full p-2.5"></textarea>
+                                    class="resize-none bg-gray-50 border border-gray-300 text-gray-900 hover:border-emerald-900 focus:ring-emerald-800  focus:border-emerald-800 text-sm rounded-lg  block w-full p-2.5">{{ old('enunce')}}</textarea>
                             </div>
+
+                            
 
                             <div class="col-span-1">
                                 @if (count($typeQuests) > 0)
@@ -71,8 +73,38 @@
                             </div>
 
                             <div class="col-span-1">
-                                <label for="require_jus" class="block mb-2 text-sm font-semibold text-emerald-900">Requiere justificación</label>
-                                <input type="checkbox" name="require_jus" id="require_jus" class=" focus:ring-0 rounded-full checked:bg-emerald-800 checkbox:bg-emerald-800  ">
+
+                                @if ($test->id_type_test != 1)
+                                    <div class="col-span1">
+                                        <label for="require_jus" class="block mb-2 text-sm font-semibold text-emerald-900">Requiere
+                                            justificación</label>
+                                        <input type="checkbox" name="require_jus" id="require_jus"
+                                            class=" focus:ring-0 rounded-full checked:bg-emerald-800 checkbox:bg-emerald-800 appearance-none text-emerald-900 focus:text-emerald-800 checked:text-emerald-900">
+                                    </div>
+                                @endif
+
+                                @if($test->id_type_test == 1)
+                                    <div class="col-span-1">
+                                        <x-modal.select nombre="group" titulo="Grupo">
+                                            <option value="Visual">Visual</option>
+                                            <option value="Auditivo">Auditivo</option>
+                                            <option value="Kinestésico">Kinestésico</option>
+                                        </x-modal.select>
+                                    </div>
+                                @endif
+                                
+                            </div>
+
+                            <div class="col-span-1">
+                                <label for="doc"
+                                    class="block mb-2 text-sm font-semibold text-emerald-900">Imagen</label>
+                                <div class="flex">
+                                    <input type="file" name="url_image" id="url_image" class="text-gray-500 hidden"
+                                        value="{{ old('url_document') }}}">
+                                    <label for="url_image"
+                                        class="text-white bg-slate-600 hover:bg-emerald-700 shadow-md font-semibold rounded-lg text-sm p-2 mx-auto zoomh">Seleccionar
+                                        documento</label>
+                                </div>
                             </div>
 
 
@@ -91,7 +123,7 @@
                                 @endif
                                 <button
                                     class="text-white flex bg-slate-600 hover:bg-emerald-700 shadow-md font-medium rounded-lg text-sm  text-center my-auto zoomh">
-                                    <a href="{{ route('cursos.index') }}" class="py-2.5 px-5">
+                                    <a href="{{ route('evaluaciones.edit', [$test->id, $selec]) }}" class="py-2.5 px-5">
                                         Volver
                                     </a>
                                 </button>

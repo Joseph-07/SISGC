@@ -13,7 +13,7 @@ class Type_questsController extends Controller{
 
     public function create()
     {
-        return view('type.quest.create');
+        return view('type.quests.create');
     }
 
     public function store(Request $request)
@@ -27,7 +27,7 @@ class Type_questsController extends Controller{
     public function edit($id)
     {
         $typeQuest = Type_quest::find($id);
-        return view('type.quest.edit', compact('typeQuest'));
+        return view('type.quests.edit', compact('typeQuest'));
     }
 
     public function update(Request $request, $id)

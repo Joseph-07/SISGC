@@ -76,8 +76,7 @@
                                         @endforeach
                                     </x-modal.select>
                                 @else
-                                    <label for="id_personal"
-                                        class="block mb-2 text-sm font-semibold text-emerald-900">Categoría</label>
+                                    <label for="id_personal" class="block mb-2.5 text-sm font-semibold text-emerald-900">Categoría</label>
                                     <span
                                         class="text-sm font-semibold text-red-800 text-center rounded border block p-2 border-red-800">¡Primero
                                         debe agregar una categoría!</span>
@@ -131,7 +130,7 @@
                                 $proc = [
                                     'select' => $valor,
                                     'ele' => $document != null ? $document : null,
-                                    'proc' => old('id_proc')!=null ? old('id_proc') : null,
+                                    'proc' => old('id_proc') != null ? old('id_proc') : null,
                                 ];
                                 // dd($proc);
                             @endphp

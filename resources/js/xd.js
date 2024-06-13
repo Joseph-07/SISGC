@@ -48,11 +48,49 @@ window.onclick = function (event) {
 
     console.log(event.target);
 
+    if(event.target.id.includes("tag-")){
+        // console.log("tag");
+        let id = event.target.id;
+        id = id.replace("tag-","");
+        console.log(id);
+
+        document.querySelectorAll('[id^="tag-"]').forEach((tag) => {
+            // console.log(tag.id);
+            if(tag.id == event.target.id){
+                console.log(tag.id);
+                tag.classList.add("transition-colors");
+                tag.classList.add("duration-500");
+                tag.classList.add("bg-slate-200");
+            }else{
+                tag.classList.remove("bg-slate-200");
+            }
+        })
+        
+        document.querySelectorAll('[id^="tab-"]').forEach((tag) => {
+            // console.log(tag.id);
+            if(tag.id == "tab-"+id){
+                tag.classList.remove("hidden");
+                tag.classList.add("zoom");
+            }else{
+                
+                tag.classList.add("hidden");
+                tag.classList.remove("zoom");
+            }
+        })
+    }
     if(event.target.id.includes("btn-delete-")){
         console.log("delete-pop-up");
         let id = event.target.id;
         id = id.replace("btn-delete-","");
         console.log(id);
+        if(document.querySelectorAll('[id^="tab-"]').length >= 1){
+            document.querySelectorAll('[id^="tab-"]').forEach((tag) => {
+                // console.log(tag.id);
+                
+                    tag.classList.remove("zoom");
+            })
+            
+        }
         document.getElementById("container").classList.remove("zoom");
         document.getElementById("crud-modal-"+id).classList.toggle("hidden");
     }

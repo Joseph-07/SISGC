@@ -62,13 +62,13 @@ class TestController extends Controller
         return redirect()->route('evaluaciones.index');
     }
 
-    public function edit($id){
+    public function edit($id, $selec = 1){
         $test = Test::find($id);
         $courses = Course::all('id', 'code');
         $personals = Personal::all('id', 'name', 'last_name', 'code');
         $typeTests = Type_test::all('id', 'name');
         $questions = Question::where('id_test', $id)->get();
-        return view('test.edit', compact('test', 'courses', 'personals', 'typeTests', 'questions'));
+        return view('test.edit', compact('test', 'courses', 'personals', 'typeTests', 'questions', 'selec'));
     }
 
     public function update(Request $request, $id){
