@@ -138,8 +138,13 @@ class TestController extends Controller
         $test = Test::find($id);
 
         if($test->type_test->name == 'Canal de aprendizaje'){
-            dd($request);
-            
+            // dd($request);
+            $preguntas;
+            foreach($request->request as $answer => $value){
+                if($answer != "_token"){
+                    echo $answer." Respuesta:".$value."<br>";
+                }
+            }
         }else{
             echo "otro tipo de test";
         }
