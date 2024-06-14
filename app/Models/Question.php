@@ -12,4 +12,12 @@ class Question extends Model
     public function getImageUrlAttribute(): string{
         return Storage::disk('images')->url($this->image);
     }
+
+    public function type_quest(){
+        return $this->belongsTo(Type_quest::class, 'id_type_question', 'id');
+    }
+    
+    public function answers(){
+        return $this->hasMany(Answer::class, 'id_question', 'id');
+    }
 }

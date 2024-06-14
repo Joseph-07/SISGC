@@ -274,28 +274,41 @@
                     </form>
                 </div>
                 <div id="tab-2" class="hidden">
-                    <div class="container max-w-3xl mx-auto mt-6 min-h-40">
+                    <div class="container max-w-5xl mx-auto mt-6 min-h-40">
                         <div class=" rounded-md bg-white shadow-xl">
                             <div class=" bg-slate-200 w-full flex border-b-2 border-emerald-800 rounded-t-md shadow-3xl">
                                 <span class="mx-auto text-md font-semibold text-gray-900 py-1">Lista de preguntas</span>
                             </div>
-                            <div
-                                class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-4 text-white font-semibold ">
-                                <span class="text-center my-auto">Enunciado</span>
-                                <span class="text-center my-auto">¿Justificable?</span>
-                                <span class="text-center my-auto">Grupo</span>
+                            <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-5 text-white font-semibold ">
+                            
+                                <span class="text-center my-auto col-span-2">Enunciado</span>
+                                <span class="text-center my-auto">Tipo de pregunta</span>
+                                @if ($test->id_type_test != 1)
+                                    <span class="text-center my-auto">¿Justificable?</span>
+                                @endif
+                                @if ($test->id_type_test == 1)
+                                    <span class="text-center my-auto">Grupo</span>
+                                @endif
                                 <span class="text-center my-auto">Acciones</span>
                             </div>
                             @if (count($questions) > 0)
                                 @foreach ($questions as $question)
-                                    <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-4 py-4">
-                                        <span class="text-center my-auto">{{ $question->enunce }}</span>
-                                        <span class="text-center my-auto">@if ($question->require_jus  == 1)
-                                            <i class="fas fa-check text-emerald-600"></i>
-                                        @else
-                                                <i class="fas fa-times text-red-600"></i>
-                                        @endif</span>
-                                        <span class="text-center my-auto">{{ $question->group }}</span>
+                                    <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-5 py-4">
+                                    
+                                        <span class="text-center my-auto col-span-2">{{ $question->enunce }}</span>
+                                        
+                                        <span class="text-center my-auto">{{ $question->type_quest->name }}</span>
+                                        
+                                        @if ($test->id_type_test != 1)                                            
+                                            <span class="text-center my-auto">@if ($question->require_jus  == 1)
+                                                <i class="fas fa-check text-emerald-600"></i>
+                                            @else
+                                                    <i class="fas fa-times text-red-600"></i>
+                                            @endif</span>
+                                        @endif
+                                        @if ($test->id_type_test == 1)
+                                            <span class="text-center my-auto">{{ $question->group }}</span>
+                                        @endif
                                         <div class=" mx-auto flex">
                                             <div class="zoomh">
                                                 <span class="mr-1">

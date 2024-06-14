@@ -53,16 +53,26 @@
 
                             <div class="col-span-1">
                                 @if (count($typeQuests) > 0)
-                                    <x-modal.select nombre="id_type_question" titulo="Tipo de pregunta">
-                                        @foreach ($typeQuests as $typeQuest)
-                                            @if ($typeQuest->id == old('id_type_question'))
-                                                <option value="{{ $typeQuest->id }}" selected>{{ $typeQuest->name }}
-                                                </option>
-                                            @else
-                                                <option value="{{ $typeQuest->id }}">{{ $typeQuest->name }}</option>
-                                            @endif
-                                        @endforeach
-                                    </x-modal.select>
+                                    @if ($test->id_type_test == 1)
+                                        <x-modal.input tipo="text" nombre="id_type_questions" titulo="Tipo de pregunta" placeholder="{{ $typeQuests[0]->name }}" deshabilitado="disabled"/>
+                                        <div class="hidden">
+                                            <x-modal.input tipo="text" nombre="id_type_question" titulo="Tipo de pregunta" placeholder="{{ $typeQuests[0]->name }}" valor="{{ $typeQuests[0]->id }}" />
+                                        </div>
+                                    @else
+                                        <x-modal.select nombre="id_type_question" titulo="Tipo de pregunta">
+                                            @foreach ($typeQuests as $typeQuest)
+                                                @if ($typeQuest->id == old('id_type_question'))
+                                                    <option value="{{ $typeQuest->id }}" selected>{{ $typeQuest->name }}
+                                                    </option>
+                                                @else
+                                                    @if ($typeQuest->id != 1)
+                                                        <option value="{{ $typeQuest->id }}">{{ $typeQuest->name }}</option>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                        </x-modal.select>
+                                    @endif
+                                    
                                 @else
                                     <label for="id_type_quest"
                                         class="block mb-2 text-sm font-semibold text-emerald-900">Tipo de pregunta</label>

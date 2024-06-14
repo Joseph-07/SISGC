@@ -92,6 +92,10 @@ Route::post('/answer/{id}', [AnswerController::class, 'store'])->name('respuesta
 Route::put('/answer/{id}', [AnswerController::class, 'update'])->name('respuestas.update');
 Route::delete('/answer/{id}', [AnswerController::class, 'destroy'])->name('respuestas.destroy');
 
+//Presentar examenes
+Route::get('/test/{id}/show', [TestController::class, 'present'])->name('evaluaciones.present');
+Route::post('/test/{id}/results', [TestController::class, 'results'])->name('evaluaciones.results');
+
 
 // Route::middleware('auth')->group(function () {
 //     // Route::get('/posts', [PostController::class, 'index'])->name('posts.index');

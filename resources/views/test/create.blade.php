@@ -80,7 +80,10 @@
                                     </x-modal.select>
                                     
                                 @else
-                                    
+                                    <label for="id_personal" class="block mb-2 text-sm font-semibold text-emerald-900">Personal</label>
+                                    <span
+                                        class="text-sm font-semibold text-red-800 text-center rounded border block p-2 border-red-800">¡Primero
+                                        debe agregar algún usuario!</span>
                                 @endif
                             </div>
                             <div class="col-span-1">

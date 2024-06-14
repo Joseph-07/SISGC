@@ -31,6 +31,7 @@ return new class extends Migration
             $table->text('enunce');
             $table->boolean('right');
             $table->integer('order');
+            $table->integer('value');
             $table->unsignedBigInteger('id_question');
             $table->foreign('id_question')->references('id')->on('questions');
             $table->timestamps();

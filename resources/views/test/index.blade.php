@@ -83,7 +83,7 @@
                                 <div class="zoomh" title="Presentar">
                                     <button
                                         class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
-                                        <a href="{{ route('evaluaciones.show', $test) }}" class="p-2 " title="Presentar">
+                                        <a href="{{ route('evaluaciones.present', $test) }}" class="p-2 " title="Presentar">
                                             <i class="fa-solid fa-pen-to-square"></i>
 
                                         </a>
@@ -111,23 +111,13 @@
                                 <div class="zoomh" >
                                     <button
                                         class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
-                                        <a href="{{ route('evaluaciones.edit', $test) }}" class="p-2 " title="Comparar resultados">
+                                        <a href="{{ route('evaluaciones.show', $test) }}" class="p-2 " title="Ver más detalles">
                                             <i class="fa-solid fa-eye"></i>
                                         </a>
                                     </button>
                                 </div>
                             </div>
                             <div class=" mx-auto flex">
-                                <div class="zoomh">
-                                    <span class="mr-1">
-                                        <button
-                                            class="p-2 px-0 bg-slate-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl ">
-                                            <a href="{{ route('evaluaciones.show', $test) }}" class="p-2 ">
-                                                Ver
-                                            </a>
-                                        </button>
-                                    </span>
-                                </div>
                                 <div class="zoomh">
                                     <span class="mr-1">
                                         <button

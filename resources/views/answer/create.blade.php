@@ -36,8 +36,8 @@
                     <form action="{{ route('respuestas.store', $question) }}" method="POST" enctype="multipart/form-data"
                         class="p-4">
                         @csrf
-                        <div class="grid grid-cols-5 gap-4">
-
+                        <div class="grid grid-cols-4 gap-4">
+                    
                             <div class="col-span-2">
                                 <x-modal.input tipo="text" nombre="name" titulo="Pregunta"
                                     placeholder="{{ $question->enunce }}" deshabilitado="disabled" />
@@ -46,17 +46,34 @@
                             <div class="col-span-2">
                                 <label for="enunce"
                                     class="block text-sm mb-2 font-semibold text-emerald-900">Enunciado</label>
-                                <textarea name="enunce" id="enunce" cols="30" rows="1"
+                                <textarea name="enunce" id="enunce" cols="30" rows="1" placeholder="Inserte el enunciado"
                                     class="resize-none bg-gray-50 border border-gray-300 text-gray-900 hover:border-emerald-900 focus:ring-emerald-800  focus:border-emerald-800 text-sm rounded-lg  block w-full p-2.5">{{ old('enunce') }}</textarea>
                             </div>
-                            <div class="col-span-1">
-                                <label for="right" class="block mb-2 text-sm font-semibold text-emerald-900">¿Es correcta?</label>
-                                <input type="checkbox" name="right" id="right"
-                                    class=" focus:ring-0 rounded-full checked:bg-emerald-800 checkbox:bg-emerald-800 appearance-none text-emerald-900 focus:text-emerald-800 checked:text-emerald-900">
-                            </div>
+                            
+                            @if ($question->type_quest->name != 'Linea de aprendizaje')
+                                <div class="col-span-1 col-start-2">
+                                    <x-modal.input type="number" nombre="value" titulo="Valor" placeholder="Escriba el valor de la respuesta" valor="{{ old('value') }}"/>
+                                </div>
+                            
+                                <div class="col-span-1">
+                                    <label for="right" class="block mb-2 text-sm font-semibold text-emerald-900">¿Es correcta?</label>
+                                    @if (old('right') == 'on')
+                                        
+                                        <input type="checkbox" name="right" id="right"
+                                            class=" focus:ring-0 rounded-full checked:bg-emerald-800 checkbox:bg-emerald-800 appearance-none text-emerald-900 focus:text-emerald-800 checked:text-emerald-900"
+                                            checked>
 
+                                    @else
+                                        
+                                        <input type="checkbox" name="right" id="right"
+                                        class=" focus:ring-0 rounded-full checked:bg-emerald-800 checkbox:bg-emerald-800 appearance-none text-emerald-900 focus:text-emerald-800 checked:text-emerald-900">
 
-                            <div class="col-span-5 mt-4 flex mx-auto gap-4">
+                                    @endif
+                                    
+                                </div>
+                            @endif
+                            <div class="col-span-4 mt-4 flex mx-auto gap-4">
+                            
                                 @if (true)
                                     <button type="submit"
                                         class="text-white flex bg-slate-600 hover:bg-emerald-700 shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center my-auto zoomh">

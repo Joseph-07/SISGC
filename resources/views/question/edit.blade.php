@@ -62,25 +62,36 @@
 
                             <div class="col-span-1">
                                 @if (count($typeQuests) > 0)
-                                    <x-modal.select nombre="id_type_question" titulo="Tipo de pregunta">
-                                        @foreach ($typeQuests as $typeQuest)
-                                            @if (old('id_type_question') != null)
-                                                @if ($typeQuest->id == old('id_type_question'))
-                                                    <option value="{{ $typeQuest->id }}" selected>{{ $typeQuest->name }}
-                                                    </option>
+                                    @if ($test->id_type_test == 1)
+                                        <x-modal.input tipo="text" nombre="id_type_questions" titulo="Tipo de pregunta" placeholder="{{ $typeQuests[0]->name }}" deshabilitado="disabled"/>
+                                        <div class="hidden">
+                                            <x-modal.input tipo="text" nombre="id_type_question" titulo="Tipo de pregunta" placeholder="{{ $typeQuests[0]->name }}" valor="{{ $typeQuests[0]->id }}" />
+                                        </div>
+                                    @else
+                                        <x-modal.select nombre="id_type_question" titulo="Tipo de pregunta">
+                                            @foreach ($typeQuests as $typeQuest)
+                                                @if (old('id_type_question') != null)
+                                                    @if ($typeQuest->id == old('id_type_question'))
+                                                        <option value="{{ $typeQuest->id }}" selected>{{ $typeQuest->name }}
+                                                        </option>
+                                                    @else
+                                                        @if ($typeQuest->id != 1)
+                                                            <option value="{{ $typeQuest->id }}">{{ $typeQuest->name }}</option>
+                                                        @endif
+                                                    @endif
                                                 @else
-                                                    <option value="{{ $typeQuest->id }}">{{ $typeQuest->name }}</option>
+                                                    @if ($typeQuest->id == $question->id_type_question)
+                                                        <option value="{{ $typeQuest->id }}" selected>{{ $typeQuest->name }}
+                                                        </option>
+                                                    @else
+                                                        @if ($typeQuest->id != 1)
+                                                            <option value="{{ $typeQuest->id }}">{{ $typeQuest->name }}</option>
+                                                        @endif
+                                                    @endif
                                                 @endif
-                                            @else
-                                                @if ($typeQuest->id == $question->id_type_question)
-                                                    <option value="{{ $typeQuest->id }}" selected>{{ $typeQuest->name }}
-                                                    </option>
-                                                @else
-                                                    <option value="{{ $typeQuest->id }}">{{ $typeQuest->name }}</option>
-                                                @endif
-                                            @endif
-                                        @endforeach
-                                    </x-modal.select>
+                                            @endforeach
+                                        </x-modal.select>
+                                    @endif
                                 @else
                                     <label for="id_type_quest"
                                         class="block mb-2 text-sm font-semibold text-emerald-900">Tipo de pregunta</label>
@@ -111,8 +122,6 @@
                                                     class=" focus:ring-0 rounded-full checked:bg-emerald-800 checkbox:bg-emerald-800 appearance-none text-emerald-900 focus:text-emerald-800 checked:text-emerald-900">
                                             @endif
                                         @endif
-                                        <input type="checkbox" name="require_jus" id="require_jus"
-                                            class=" focus:ring-0 rounded-full checked:bg-emerald-800 checkbox:bg-emerald-800 appearance-none text-emerald-900 focus:text-emerald-800 checked:text-emerald-900">
                                     </div>
                                 @endif
 
@@ -200,21 +209,36 @@
                             <div class=" bg-slate-200 w-full flex border-b-2 border-emerald-800 rounded-t-md shadow-3xl">
                                 <span class="mx-auto text-md font-semibold text-gray-900 py-1">Lista de respuestas</span>
                             </div>
-                            <div
-                                class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-3 text-white font-semibold ">
+                            @if ($question->type_quest->name == 'Linea de aprendizaje')
+                                <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-2 text-white font-semibold ">
+                            @else
+                                <div class="bg-emerald-700 border-b-2 border-emerald-800 grid grid-cols-4 text-white font-semibold ">
+                            @endif
                                 <span class="text-center my-auto">Enunciado</span>
-                                <span class="text-center my-auto">¿Es correcta?</span>
+                                @if ($question->type_quest->name != 'Linea de aprendizaje')
+                                    <span class="text-center my-auto">¿Es correcta?</span>
+                                    <span class="text-center my-auto">Valor</span>
+                                @endif
                                 <span class="text-center my-auto">Acciones</span>
                             </div>
                             @if (count($answers) > 0)
                                 @foreach ($answers as $answer)
-                                    <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-3 py-4">
+                                    @if ($question->type_quest->name == 'Linea de aprendizaje')
+                                    <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-2 py-4">
+                                    @else
+                                    <div class="bg-slate-100 border-b-2 border-emerald-700 grid grid-cols-4 py-4">
+                                    @endif
+                                    
                                         <span class="text-center my-auto">{{ $answer->enunce }}</span>
-                                        <span class="text-center my-auto">@if ($answer->right  == 1)
-                                                <i class="fas fa-check text-emerald-600"></i>
-                                        @else
-                                                <i class="fas fa-times text-red-600"></i>
-                                        @endif</span>
+                                        @if ($question->type_quest->name != 'Linea de aprendizaje')
+                                            <span class="text-center my-auto">@if ($answer->right  == 1)
+                                                    <i class="fas fa-check text-emerald-600"></i>
+                                            @else
+                                                    <i class="fas fa-times text-red-600"></i>
+                                            @endif</span>
+                                        
+                                            <span class="text-center my-auto">{{ $answer->value }}</span>
+                                        @endif
                                         <div class=" mx-auto flex">
                                             <div class="zoomh">
                                                 <span class="mr-1">

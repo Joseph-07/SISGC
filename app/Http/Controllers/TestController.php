@@ -17,6 +17,12 @@ class TestController extends Controller
         return view('test.index', compact('tests'));
     }
 
+    public function show($id){
+        $test = Test::find($id);
+        $questions = Question::where('id_test', $id)->get();
+        return view('test.show', compact('test', 'questions'));
+    }
+
     public function create(){
         $courses = Course::all('id', 'code');
         $personals = Personal::all('id', 'name', 'last_name', 'code');
@@ -110,5 +116,46 @@ class TestController extends Controller
         $test = Test::find($id);
         $test->delete();
         return redirect()->route('evaluaciones.index');
+    }
+
+    public function present($id){
+        $test = Test::find($id);
+        $questions = Question::with('answers')->where('id_test', $id)->get();
+        foreach($questions as $question){
+            $question->total = 0;
+            foreach ($question->answers as $answer){
+                $question->total += $answer->value;
+            }
+            
+        }
+        // dd($questions);
+
+        return view('test.present', compact('test', 'questions'));
+    }
+
+    public function results(Request $request, $id){
+        // dd($request);
+        $test = Test::find($id);
+
+        if($test->type_test->name == 'Canal de aprendizaje'){
+            dd($request);
+            
+        }else{
+            echo "otro tipo de test";
+        }
+
+        
+        // $questions = Question::with('answers')->where('id_test', $id)->get();
+        // foreach($questions as $question){
+        //     $question->total = 0;
+        //     foreach ($question->answers as $answer){
+        //         $question->total += $answer->value;
+        //     }
+            
+        // }
+        // // dd($questions);
+        // return view('test.results', compact('test', 'questions'));
+
+
     }
 }

@@ -25,7 +25,7 @@ class QuestionController extends Controller{
         ]);
         $lastQuestion = Question::where('id_test', $id)->orderBy('created_at', 'desc')->first();
         // dd($lastQuestion);
-
+        // dd($request);
         $question = new Question();
         if($lastQuestion != null){
             $question->order = $lastQuestion->order + 1;
@@ -55,7 +55,7 @@ class QuestionController extends Controller{
             $question->group = null;
         }
         if(isset($request->require_jus)){
-            $question->require_jus = $request->require_jus;
+            $question->require_jus = true;
         }else{
             $question->require_jus = false;
         }
@@ -64,9 +64,9 @@ class QuestionController extends Controller{
         $question->created_at= date('Y-m-d H:i:s');
 
         // dd($question);
-        $question->save();
-        $selec=2;
         // $question->save();
+        $selec=2;
+        $question->save();
         return redirect()->route('evaluaciones.edit', ['id' => $id, 'selec' => $selec]);
     }
 

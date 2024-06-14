@@ -18,17 +18,17 @@
                 <!-- Modal header -->
                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-emerald-700">
                     <h3 class="text-lg font-semibold text-emerald-900 ">
-                        Editar tipo de documento
+                        Editar tipo de pregunta
                     </h3>
                 </div>
                 <div>
-                    <form action="{{ route('tiposDoc.update', [$typeDoc->id]) }}" method="POST" class="p-4">
+                    <form action="{{ route('tiposQuest.update', [$typeQuest->id]) }}" method="POST" class="p-4">
                         @csrf
                         @method('PUT')
                         <div class="grid grid-cols-2 gap-4">
                             <div class="col-span-2">
                                 <x-modal.input nombre="name" titulo="Nombre" placeholder="Escriba el nombre del tipo de documento"
-                                    tipo="text" valor="{{ $typeDoc->name }}"/>
+                                    tipo="text" valor="{{ $typeQuest->name }}"/>
                             </div>
                             <div class="col-span-2 mt-4 flex mx-auto gap-4">
                                 <button type="submit"
